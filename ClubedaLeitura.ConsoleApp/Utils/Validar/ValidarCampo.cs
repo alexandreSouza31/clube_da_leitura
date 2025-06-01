@@ -27,28 +27,67 @@ namespace ClubedaLeitura.Utils
                     }
                 }
 
-                if (nomeCampo.ToLower() == "nome" || nomeCampo.ToLower() == "nome responsável")
+                if (nomeCampo.Trim().ToLower() == "nome" || nomeCampo.Trim().ToLower() == "nome responsável")
                 {
                     int numeroMinimoCaracteres = 3;
                     int numeroMaximoCaracteres = 100;
 
-                    if (valorCampo.ToLower().Length < numeroMinimoCaracteres)
+                    if (valorCampo.Trim().ToLower().Length < numeroMinimoCaracteres)
                     {
                         erros += $"'{nomeCampo}' deve ter mais de {numeroMinimoCaracteres} caracteres!\n";
                     }
-                    else if(valorCampo.ToLower().Length > numeroMaximoCaracteres)
+                    else if (valorCampo.Trim().ToLower().Length > numeroMaximoCaracteres)
                     {
                         erros += $"'{nomeCampo}' deve ter menos de {numeroMaximoCaracteres} caracteres!\n";
                     }
                 }
 
-                if(nomeCampo.ToLower()=="telefone")
+                if (nomeCampo.ToLower() == "telefone")
                 {
-                    erros += $"'{nomeCampo}' deve ter o formato '(63)3215 - 0000 ou(63) 99100 - 0000)'!\n";                    
+                    valorCampo = RemoverNaoNumericos(valorCampo);
+
+                    if (valorCampo.Length < 10 || valorCampo.Length > 11)
+                    {
+                        erros += $"'{nomeCampo}' deve ter o formato '(63) 3215-0000' ou '(63) 99100-0000'!\n";
+                    }
                 }
-                //Não pode haver amigos com o mesmo nome e telefone.
+
             }
             return erros;
+        }
+
+        public static string ValidarDuplicidadeAmigo(string nome, string telefone, Amigo[] amigosCadastrados, int idAtual)
+        {
+            string nomeComparado = nome.Trim().ToLower();
+            string telefoneComparado = RemoverNaoNumericos(telefone);
+
+            foreach (var amigo in amigosCadastrados)
+            {
+                if (amigo == null)
+                    continue;
+
+                string nomeAmigo = amigo.nome.Trim().ToLower();
+                string telefoneAmigo = RemoverNaoNumericos(amigo.telefone);
+
+                if (nomeAmigo == nomeComparado && telefoneAmigo == telefoneComparado && amigo.id != idAtual)
+                {
+                    return $"Já existe um amigo cadastrado com o nome '{nome}' e telefone '{telefone}'!";
+                }
+                if (nomeAmigo == nomeComparado && amigo.id != idAtual)
+                {
+                    return $"Já existe um amigo cadastrado com o nome '{nome}'!";
+                }
+                if (telefoneAmigo == telefoneComparado && amigo.id != idAtual)
+                {
+                    return $"Já existe um amigo cadastrado com o telefone '{telefone}'!";
+                }
+            }
+            return "";
+        }
+
+        private static string RemoverNaoNumericos(string texto)
+        {
+            return new string(texto.Where(char.IsDigit).ToArray());
         }
     }
 }

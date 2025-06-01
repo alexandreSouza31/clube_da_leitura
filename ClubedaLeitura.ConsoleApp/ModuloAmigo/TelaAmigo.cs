@@ -32,10 +32,9 @@ namespace ClubedaLeitura.ModuloAmigo
 
         protected override Amigo ObterNovosDados(Amigo dadosOriginais, bool editar)
         {
-            var tela = new TelaAmigo(null);
             while (true)
             {
-                tela.Visualizar(false, false, false);
+                Visualizar(false, false, false);
                 ExibirCabecalho();
 
                 if (editar)
@@ -53,6 +52,20 @@ namespace ClubedaLeitura.ModuloAmigo
                 string[] nomesCampos = { "nome", "nome responsável", "telefone" };
                 string[] valoresCampos = { nome, email, telefone };
                 string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
+                var registros = repositorioAmigo.SelecionarRegistros();
+
+                string erroDuplicado = ValidarCampo.ValidarDuplicidadeAmigo(nome, telefone, registros, dadosOriginais.id);
+
+                if (!string.IsNullOrEmpty(erroDuplicado))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nErros encontrados:");
+                    Console.WriteLine(erroDuplicado);
+                    Console.ResetColor();
+                    DigitarEnterEContinuar.Executar();
+                    Console.Clear();
+                    continue;
+                }
 
                 if (!string.IsNullOrEmpty(erros))
                 {
