@@ -1,4 +1,5 @@
 ﻿using ClubedaLeitura.ModuloAmigo;
+using ClubedaLeitura.ModuloCaixa;
 using System.Net.Mail;
 namespace ClubedaLeitura.Utils
 {
@@ -80,6 +81,30 @@ namespace ClubedaLeitura.Utils
                 if (telefoneAmigo == telefoneComparado && amigo.id != idAtual)
                 {
                     return $"Já existe um amigo cadastrado com o telefone '{telefone}'!";
+                }
+            }
+            return "";
+        }
+
+        public static string ValidarDuplicidadeCaixa(string etiqueta, Caixa[] caixasCadastradas, int idAtual)
+        {
+            string etiquetaComparada = etiqueta.Trim().ToLower();
+
+            if(etiquetaComparada.Length > 50)
+            {
+                return $"Tamanho da etiqueta não deve ultrapassar 50 caracteres!";
+            }
+
+            foreach (var caixa in caixasCadastradas)
+            {
+                if (caixa == null)
+                    continue;
+
+                string nomeEtiqueta = caixa.etiqueta.Trim().ToLower();
+
+                if (nomeEtiqueta == etiquetaComparada && caixa.id != idAtual)
+                {
+                    return $"Já existe uma caixa cadastrada com a etiqueta '{etiqueta}'!";
                 }
             }
             return "";

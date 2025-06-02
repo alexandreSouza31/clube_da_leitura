@@ -1,5 +1,6 @@
 ﻿using ClubedaLeitura.Apresentacao;
 using ClubedaLeitura.ModuloAmigo;
+using ClubedaLeitura.ModuloCaixa;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ConsoleApp
@@ -10,6 +11,10 @@ namespace ClubedaLeitura.ConsoleApp
         {
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
             TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
+
+            RepositorioCaixa repositorioCaixa=new RepositorioCaixa();
+            TelaCaixa telaCaixa=new TelaCaixa(repositorioCaixa);
+
             Direcionar direcionar = new Direcionar();
 
             TelaMenuPrincipal telaPrincipal = new TelaMenuPrincipal();
@@ -24,6 +29,9 @@ namespace ClubedaLeitura.ConsoleApp
                 {
                     case '1':
                         telaAmigo.ExecutarMenu();
+                        break;
+                    case '2':
+                        telaCaixa.ExecutarMenu();
                         break;
 
                     default:

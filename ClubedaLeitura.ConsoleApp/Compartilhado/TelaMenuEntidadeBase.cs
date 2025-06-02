@@ -13,7 +13,7 @@ namespace ClubedaLeitura.Compartilhado
             this.nomeEntidade = telaBase.nomeEntidade;
         }
 
-        public bool ExecutarMenuEntidade()
+        public bool ExecutarMenuEntidade(bool mostrarEmprestimo=false)
         {
             char opcaoEscolhida = telaBase.ApresentarMenu();
 
@@ -33,6 +33,14 @@ namespace ClubedaLeitura.Compartilhado
                     break;
                 case '4':
                     telaBase.Excluir();
+                    break;
+                case '5':  
+                    if(mostrarEmprestimo == true)
+                    {
+                        Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
+                        Console.WriteLine("Aqui aparecerão os empréstimos cadastrados.");
+                        Console.ReadLine();
+                    }
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;

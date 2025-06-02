@@ -1,0 +1,107 @@
+﻿using ClubedaLeitura.Compartilhado;
+using ClubedaLeitura.Utils;
+
+namespace ClubedaLeitura.ModuloCaixa
+{
+    class TelaCaixa : TelaBase<Caixa>
+    {
+        private RepositorioCaixa repositorioCaixa;
+
+        public TelaCaixa(RepositorioCaixa? repositorioCaixa = null)
+            : base("Caixa", repositorioCaixa ?? new RepositorioCaixa())
+        {
+            this.repositorioCaixa = repositorioCaixa ?? new RepositorioCaixa();
+        }
+
+        public void ExecutarMenu()
+        {
+            var menuCaixa = new TelaMenuEntidadeBase<Caixa>(this);
+
+            bool continuar = true;
+            while (continuar)
+            {
+                continuar = menuCaixa.ExecutarMenuEntidade();
+            }
+        }
+
+        public override Caixa CriarInstanciaVazia()
+        {
+            return new Caixa();
+        }
+
+            protected override Caixa ObterNovosDados(Caixa dadosOriginais, bool editar)
+            {
+                while (true)
+                {
+                    Visualizar(false, false, false);
+                    ExibirCabecalho();
+
+                    if (editar)
+                    {
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("************* Caso não queira alterar um campo, pressione Enter para mantê-lo.");
+                        Console.ResetColor();
+                    }
+
+                    string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
+                    string cor = EntradaHelper.ObterEntrada("Cor", dadosOriginais.cor, editar);
+                    int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo", dadosOriginais.diasEmprestimo, editar);
+                    
+                    if(diasEmprestimo == 0)
+                    {
+                        diasEmprestimo = 7;
+                    }
+
+                    string[] nomesCampos = { "etiqueta", "cor", "dias empréstimo" };
+                    string[] valoresCampos = { etiqueta, cor, diasEmprestimo.ToString() };
+                    string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
+                    var registros = repositorioCaixa.SelecionarRegistros();
+
+                    string erroDuplicado = ValidarCampo.ValidarDuplicidadeCaixa(etiqueta, registros, dadosOriginais.id);
+
+                    if (!string.IsNullOrEmpty(erroDuplicado))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nErros encontrados:");
+                        Console.WriteLine(erroDuplicado);
+                        Console.ResetColor();
+                        DigitarEnterEContinuar.Executar();
+                        Console.Clear();
+                        continue;
+                    }
+
+                    if (!string.IsNullOrEmpty(erros))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nErros encontrados:");
+                        Console.WriteLine(erros);
+                        Console.ResetColor();
+                        DigitarEnterEContinuar.Executar();
+                        Console.Clear();
+                        continue;
+                    }
+                    return new Caixa(etiqueta, cor, diasEmprestimo);
+                }
+            }
+
+        public static void AtualizarCaixa(Caixa original, Caixa novosDados)
+        {
+            original.etiqueta = novosDados.etiqueta;
+            original.cor = novosDados.cor;
+            original.diasEmprestimo = novosDados.diasEmprestimo;
+        }
+
+        protected override void ImprimirCabecalhoTabela()
+        {
+            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
+                "id".ToUpper(), "etiqueta".ToUpper(), "cor".ToUpper(), "dias empréstimo".ToUpper());
+        }
+
+        protected override void ImprimirRegistro(Caixa c)
+        {
+            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
+                c.id, c.etiqueta, c.cor, c.diasEmprestimo);
+        }
+    }
+}

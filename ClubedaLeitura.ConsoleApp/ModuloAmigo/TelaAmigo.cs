@@ -1,4 +1,3 @@
-//using GestaoDeEquipamentosConsoleApp.Negocio;
 using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.Utils;
 
@@ -16,12 +15,12 @@ namespace ClubedaLeitura.ModuloAmigo
 
         public void ExecutarMenu()
         {
-            var menuFabricante = new TelaMenuEntidadeBase<Amigo>(this);
+            var menuAmigo = new TelaMenuEntidadeBase<Amigo>(this);
 
             bool continuar = true;
             while (continuar)
             {
-                continuar = menuFabricante.ExecutarMenuEntidade();
+                continuar = menuAmigo.ExecutarMenuEntidade(true);
             }
         }
 
@@ -81,7 +80,7 @@ namespace ClubedaLeitura.ModuloAmigo
             }
         }
 
-        public static void AtualizarFabricante(Amigo original, Amigo novosDados)
+        public static void AtualizarAmigo(Amigo original, Amigo novosDados)
         {
             original.nome = novosDados.nome;
             original.nomeResponsavel = novosDados.nomeResponsavel;
@@ -94,10 +93,10 @@ namespace ClubedaLeitura.ModuloAmigo
                 "id".ToUpper(), "nome".ToUpper(), "nome responsável".ToUpper(), "telefone".ToUpper());
         }
 
-        protected override void ImprimirRegistro(Amigo f)
+        protected override void ImprimirRegistro(Amigo a)
         {
             Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
-                f.id, f.nome, f.nomeResponsavel, f.telefone);
+                a.id, a.nome, a.nomeResponsavel, a.telefone);
         }
     }
 }

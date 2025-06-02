@@ -31,7 +31,9 @@ namespace ClubedaLeitura.Compartilhado
             Console.WriteLine($"2 - Visualizar {nomeEntidade}");
             Console.WriteLine($"3 - Editar {nomeEntidade}");
             Console.WriteLine($"4 - Excluir {nomeEntidade}");
-            Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
+
+            if (nomeEntidade == "Amigo") Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
+            
             Console.WriteLine("S - Sair");
             Console.Write("\nDigite uma opção: ");
             char opcaoEscolhida = Convert.ToChar(Console.ReadLine()!.ToUpper()[0]);
