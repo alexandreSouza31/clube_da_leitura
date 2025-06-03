@@ -1,6 +1,7 @@
 ﻿using ClubedaLeitura.Apresentacao;
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloCaixa;
+using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ConsoleApp
@@ -14,6 +15,9 @@ namespace ClubedaLeitura.ConsoleApp
 
             RepositorioCaixa repositorioCaixa=new RepositorioCaixa();
             TelaCaixa telaCaixa=new TelaCaixa(repositorioCaixa);
+
+            RepositorioRevista repositorioRevista=new RepositorioRevista();
+            TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa, telaCaixa);
 
             Direcionar direcionar = new Direcionar();
 
@@ -33,7 +37,9 @@ namespace ClubedaLeitura.ConsoleApp
                     case '2':
                         telaCaixa.ExecutarMenu();
                         break;
-
+                    case '3':
+                        telaRevista.ExecutarMenu();
+                        break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Opção inválida!");

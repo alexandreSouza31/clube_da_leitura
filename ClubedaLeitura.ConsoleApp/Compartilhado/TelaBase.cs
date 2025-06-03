@@ -56,7 +56,7 @@ namespace ClubedaLeitura.Compartilhado
                 repositorio.CadastrarRegistro(novosDados);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n{nomeEntidade} cadastrado com sucesso! ID: {novosDados.id}");
+                Console.WriteLine($"\n{nomeEntidade} cadastrado(a) com sucesso! ID: {novosDados.id}");
                 Console.ResetColor();
 
                 direcionar.DirecionarParaMenu(true, false, nomeEntidade);
@@ -71,7 +71,7 @@ namespace ClubedaLeitura.Compartilhado
             Console.Clear();
             if (exibirCabecalho)
                 ExibirCabecalho();
-            Console.WriteLine($"----- {nomeEntidade}s Registrados -----");
+            Console.WriteLine($"----- {nomeEntidade}s Registrados(as) -----");
 
             bool haRegistros = repositorio.VerificarExistenciaRegistros();
 
@@ -147,7 +147,7 @@ namespace ClubedaLeitura.Compartilhado
                 repositorio.EditarRegistro(idRegistro, novosDados);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n{nomeEntidade} editado com sucesso! id: {novosDados.id}");
+                Console.WriteLine($"\n{nomeEntidade} editado(a) com sucesso! id: {novosDados.id}");
                 Console.ResetColor();
 
                 direcionar.DirecionarParaMenu(true, false, nomeEntidade);
@@ -197,7 +197,7 @@ namespace ClubedaLeitura.Compartilhado
                     repositorio.ExcluirRegistro(idRegistro);
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\n{nomeEntidade} excluído com sucesso! id: {registro.id}");
+                    Console.WriteLine($"\n{nomeEntidade} excluído(a) com sucesso! id: {registro.id}");
                     Console.ResetColor();
                     direcionar.DirecionarParaMenu(false, false, nomeEntidade);
                     return true;

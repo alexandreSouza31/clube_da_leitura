@@ -1,5 +1,6 @@
 ﻿using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloCaixa;
+using ClubedaLeitura.ModuloRevista;
 using System.Net.Mail;
 namespace ClubedaLeitura.Utils
 {
@@ -110,6 +111,34 @@ namespace ClubedaLeitura.Utils
             return "";
         }
 
+        public static string ValidarDuplicidadeRevista(string titulo,int numeroEdicao, Revista[] revistasCadastradas, int idAtual)
+        {
+            string tituloComparado = titulo.Trim().ToLower();
+            int numeroEdicaoComparado = numeroEdicao;
+
+            foreach (var revista in revistasCadastradas)
+            {
+                if (revista == null)
+                    continue;
+
+                string tituloRevista = revista.titulo.Trim().ToLower();
+                int numeroEdicaoRevista = revista.numeroEdicao;
+
+                if (tituloRevista == tituloComparado && numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
+                {
+                    return $"Já existe um amigo cadastrado com o nome '{titulo}' e telefone '{numeroEdicao}'!";
+                }
+                if (tituloRevista == tituloComparado && revista.id != idAtual)
+                {
+                    return $"Já existe um amigo cadastrado com o nome '{titulo}'!";
+                }
+                if (numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
+                {
+                    return $"Já existe um amigo cadastrado com o telefone '{numeroEdicao}'!";
+                }
+            }
+            return "";
+        }
         private static string RemoverNaoNumericos(string texto)
         {
             return new string(texto.Where(char.IsDigit).ToArray());

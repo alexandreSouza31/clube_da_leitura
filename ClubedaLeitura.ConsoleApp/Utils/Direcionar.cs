@@ -1,5 +1,3 @@
-//using ClubedaLeitura.Apresentacao;
-
 namespace ClubedaLeitura.Utils
 {
 	public class Direcionar
@@ -10,7 +8,7 @@ namespace ClubedaLeitura.Utils
 			{
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine($"\nNenhum {contexto}(a) cadastrado ainda!");
+				Console.WriteLine($"\nNenhum(a) {contexto}(a) cadastrado ainda!");
 				Console.ResetColor();
 			}
 
