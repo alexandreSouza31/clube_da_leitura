@@ -1,6 +1,7 @@
 ﻿using ClubedaLeitura.Apresentacao;
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloCaixa;
+using ClubedaLeitura.ModuloEmprestimo;
 using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 
@@ -18,6 +19,9 @@ namespace ClubedaLeitura.ConsoleApp
 
             RepositorioRevista repositorioRevista=new RepositorioRevista();
             TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa, telaCaixa);
+
+            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
+            TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo,repositorioAmigo,repositorioRevista,telaAmigo,telaRevista);
 
             Direcionar direcionar = new Direcionar();
 
@@ -39,6 +43,9 @@ namespace ClubedaLeitura.ConsoleApp
                         break;
                     case '3':
                         telaRevista.ExecutarMenu();
+                        break;
+                    case '4':
+                        telaEmprestimo.ExecutarMenu();
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;

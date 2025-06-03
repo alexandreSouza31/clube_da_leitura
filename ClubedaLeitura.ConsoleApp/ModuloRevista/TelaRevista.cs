@@ -51,9 +51,14 @@ namespace ClubedaLeitura.ModuloRevista
                     Console.ResetColor();
                 }
 
-                string titulo = EntradaHelper.ObterEntrada("Titulo", dadosOriginais.titulo, editar);
-                int numeroEdicao = EntradaHelper.ObterEntrada("Número edição", dadosOriginais.numeroEdicao, editar);
-                int anoPublicacao = EntradaHelper.ObterEntrada("Ano Publicação", dadosOriginais.anoPublicacao, editar);
+                #region criar BD para fins de teste
+                string titulo = "Anime Do";
+                int numeroEdicao = 01151501996;
+                int anoPublicacao = 1996;
+                //string titulo = EntradaHelper.ObterEntrada("Titulo", dadosOriginais.titulo, editar);
+                //int numeroEdicao = EntradaHelper.ObterEntrada("Número edição", dadosOriginais.numeroEdicao, editar);
+                //int anoPublicacao = EntradaHelper.ObterEntrada("Ano Publicação", dadosOriginais.anoPublicacao, editar);
+                #endregion
 
                 bool haCaixas = telaCaixa.Visualizar(true, false, false);
 
@@ -125,14 +130,14 @@ namespace ClubedaLeitura.ModuloRevista
 
         protected override void ImprimirCabecalhoTabela()
         {
-            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15} | {4, -12}",
-                "id".ToUpper(), "titulo".ToUpper(), "número edição".ToUpper(), "ano publicação".ToUpper(), "caixa".ToUpper());
+            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15} | {4, -12} | {5, -10}",
+                "id".ToUpper(), "titulo".ToUpper(), "número edição".ToUpper(), "ano publicação".ToUpper(), "caixa".ToUpper(), "status".ToUpper());
         }
 
         protected override void ImprimirRegistro(Revista r)
         {
-            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15} | {4, -12}",
-                r.id, r.titulo, r.numeroEdicao, r.anoPublicacao, r.caixa?.etiqueta);
+            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15} | {4, -12} | {5, -10}",
+                r.id, r.titulo, r.numeroEdicao, r.anoPublicacao, r.caixa?.etiqueta, r.status);
         }
     }
 }

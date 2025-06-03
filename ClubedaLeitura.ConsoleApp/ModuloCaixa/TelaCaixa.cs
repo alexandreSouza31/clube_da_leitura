@@ -44,11 +44,16 @@ namespace ClubedaLeitura.ModuloCaixa
                         Console.ResetColor();
                     }
 
-                    string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
-                    string cor = EntradaHelper.ObterEntrada("Cor", dadosOriginais.cor, editar);
-                    int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo", dadosOriginais.diasEmprestimo, editar);
-                    
-                    if(diasEmprestimo == 0)
+                #region criar BD para fins de teste
+                string etiqueta = "dsds45d54";
+                    string cor = "verde";
+                    int diasEmprestimo = 9;
+                //string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
+                //string cor = EntradaHelper.ObterEntrada("Cor", dadosOriginais.cor, editar);
+                //int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo", dadosOriginais.diasEmprestimo, editar);
+                #endregion
+
+                if (diasEmprestimo == 0)
                     {
                         diasEmprestimo = 7;
                     }

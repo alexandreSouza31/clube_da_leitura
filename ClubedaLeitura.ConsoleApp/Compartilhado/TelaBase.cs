@@ -75,7 +75,7 @@ namespace ClubedaLeitura.Compartilhado
 
             bool haRegistros = repositorio.VerificarExistenciaRegistros();
 
-            if (!haRegistros)
+            if (haRegistros == false)
             {
                 if (msgAoCadastrar)
                 {

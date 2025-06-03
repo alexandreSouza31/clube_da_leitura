@@ -1,5 +1,6 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloCaixa;
+using ClubedaLeitura.ModuloEmprestimo;
 
 namespace ClubedaLeitura.ModuloRevista
 {
@@ -12,6 +13,7 @@ namespace ClubedaLeitura.ModuloRevista
         public int numeroEdicao { get; set; }
         public int anoPublicacao { get; set; }
         public Caixa caixa { get; set; }
+        public StatusEmprestimo status { get; set; } = StatusEmprestimo.Aberto;
 
         public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa)
         {
@@ -20,6 +22,7 @@ namespace ClubedaLeitura.ModuloRevista
             this.numeroEdicao = numeroEdicao;
             this.anoPublicacao = anoPublicacao;
             this.caixa = caixa;
+            this.status = StatusEmprestimo.Aberto;
         }
 
         public Revista() { }

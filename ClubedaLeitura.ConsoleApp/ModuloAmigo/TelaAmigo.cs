@@ -44,9 +44,14 @@ namespace ClubedaLeitura.ModuloAmigo
                     Console.ResetColor();
                 }
 
-                string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.nome, editar);
-                string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.nomeResponsavel, editar);
-                string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.telefone, editar);
+                #region criar BD para fins de teste
+                string nome = "Alexandre";
+                string email = "alexandre@email.com";
+                string telefone = "6399105-5089";
+                //string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.nome, editar);
+                //string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.nomeResponsavel, editar);
+                //string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.telefone, editar);
+                #endregion
 
                 string[] nomesCampos = { "nome", "nome responsável", "telefone" };
                 string[] valoresCampos = { nome, email, telefone };
