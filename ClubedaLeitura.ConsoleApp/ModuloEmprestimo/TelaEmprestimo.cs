@@ -106,6 +106,53 @@ namespace ClubedaLeitura.ModuloEmprestimo
             }
         }
 
+        public void CadastrarDevolucao()
+        {
+            ExibirCabecalho("Cadastrar Devolução");
+
+            var emprestimosAbertos = repositorioEmprestimo.SelecionarEmprestimosAbertos();
+
+            if (emprestimosAbertos.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Nenhum empréstimo aberto encontrado!");
+                Console.ResetColor();
+                direcionar.DirecionarParaMenu(false, false, nomeEntidade);
+                return;
+            }
+
+            Console.WriteLine("Empréstimos Abertos:");
+            foreach (var e in emprestimosAbertos)
+            {
+                ImprimirCabecalhoTabela();
+                ImprimirRegistro(e);
+            }
+
+            Console.Write("\nDigite o ID do empréstimo a devolver: ");
+            int id = int.Parse(Console.ReadLine()!);
+
+            var emprestimo = repositorio.SelecionarRegistroPorId(id);
+
+            if (emprestimo == null || emprestimo.status != StatusEmprestimo.Aberto)
+            //if (emprestimo == null || ((Emprestimo)emprestimo).status != StatusEmprestimo.Aberto)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Empréstimo não encontrado ou já concluído!");
+                Console.ResetColor();
+                direcionar.DirecionarParaMenu(true, false, nomeEntidade);
+                return;
+            }
+
+            emprestimo.Concluir();
+    //((Emprestimo)emprestimo).Concluir();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Devolução registrada com sucesso!");
+            Console.ResetColor();
+
+            direcionar.DirecionarParaMenu(true, false, nomeEntidade);
+        }
+
 
         protected override void ImprimirCabecalhoTabela()
         {

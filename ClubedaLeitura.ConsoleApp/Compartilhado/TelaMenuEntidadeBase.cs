@@ -1,3 +1,4 @@
+using ClubedaLeitura.ModuloEmprestimo;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.Compartilhado
@@ -20,34 +21,61 @@ namespace ClubedaLeitura.Compartilhado
             if (opcaoEscolhida == 'S' || opcaoEscolhida == 's')
                 return false;
 
-            switch (opcaoEscolhida)
+            if (nomeEntidade == "Empréstimo")
             {
-                case '1':
-                    telaBase.Cadastrar();
-                    break;
-                case '2':
-                    telaBase.Visualizar(true, true, false);
-                    break;
-                case '3':
-                    telaBase.Editar();
-                    break;
-                case '4':
-                    telaBase.Excluir();
-                    break;
-                case '5':  
-                    if(mostrarEmprestimo == true)
-                    {
-                        Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
-                        Console.WriteLine("Aqui aparecerão os empréstimos cadastrados.");
-                        Console.ReadLine();
-                    }
-                    break;
-                default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Digite uma opção válida!");
-                    Console.ResetColor();
-                    DigitarEnterEContinuar.Executar(true);
-                    break;
+                switch (opcaoEscolhida)
+                {
+                    case '1':
+                        telaBase.Cadastrar();
+                        break;
+                    case '2':
+                        if (telaBase is TelaEmprestimo telaEmprestimo)
+                        {
+                            telaEmprestimo.CadastrarDevolucao();
+                        }
+                        break;
+                    case '3':
+                        telaBase.Visualizar(true, true, false);
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Digite uma opção válida!");
+                        Console.ResetColor();
+                        DigitarEnterEContinuar.Executar(true);
+                        break;
+                }
+            }
+            else
+            {
+                switch (opcaoEscolhida)
+                {
+                    case '1':
+                        telaBase.Cadastrar();
+                        break;
+                    case '2':
+                        telaBase.Visualizar(true, true, false);
+                        break;
+                    case '3':
+                        telaBase.Editar();
+                        break;
+                    case '4':
+                        telaBase.Excluir();
+                        break;
+                    case '5':
+                        if (mostrarEmprestimo == true)
+                        {
+                            Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
+                            Console.WriteLine("Aqui aparecerão os empréstimos cadastrados.");
+                            Console.ReadLine();
+                        }
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Digite uma opção válida!");
+                        Console.ResetColor();
+                        DigitarEnterEContinuar.Executar(true);
+                        break;
+                }
             }
             return true;
         }

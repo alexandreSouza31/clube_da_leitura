@@ -27,12 +27,22 @@ namespace ClubedaLeitura.Compartilhado
         {
             ExibirCabecalho();
             Console.WriteLine();
-            Console.WriteLine($"1 - Cadastrar {nomeEntidade}");
-            Console.WriteLine($"2 - Visualizar {nomeEntidade}");
-            Console.WriteLine($"3 - Editar {nomeEntidade}");
-            Console.WriteLine($"4 - Excluir {nomeEntidade}");
 
-            if (nomeEntidade == "Amigo") Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
+            if(nomeEntidade == "Empréstimo")
+            {
+                Console.WriteLine($"1 - Cadastrar {nomeEntidade}");
+                Console.WriteLine($"2 - Cadastrar Devolução");
+                Console.WriteLine($"3 - Visualizar {nomeEntidade}");
+            }
+            else
+            {
+                Console.WriteLine($"1 - Cadastrar {nomeEntidade}");
+                Console.WriteLine($"2 - Visualizar {nomeEntidade}");
+                Console.WriteLine($"3 - Editar {nomeEntidade}");
+                Console.WriteLine($"4 - Excluir {nomeEntidade}");
+
+                if (nomeEntidade == "Amigo") Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
+            }
             
             Console.WriteLine("S - Sair");
             Console.Write("\nDigite uma opção: ");

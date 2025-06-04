@@ -8,7 +8,8 @@ namespace ClubedaLeitura.ModuloEmprestimo
         public List<Emprestimo> SelecionarEmprestimosAbertos()
         {
             return SelecionarRegistros()
-                .Where(e => e.status.ToString() == "Aberto" || e.status.ToString() == "Atrasado")
+                .Where(e => e != null &&
+                    (e.status == StatusEmprestimo.Aberto || e.status == StatusEmprestimo.Atrasado))
                 .ToList();
         }
 
