@@ -72,6 +72,7 @@ namespace ClubedaLeitura.ModuloRevista
                     return null;
                 }
 
+                Console.WriteLine();
                 Console.Write(editar ? $"ID da caixa ({dadosOriginais.caixa?.id}): " : "ID da caixa: ");
                 string inputCaixa = Console.ReadLine()!;
 

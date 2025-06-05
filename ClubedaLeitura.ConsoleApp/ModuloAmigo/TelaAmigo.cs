@@ -1,4 +1,5 @@
 using ClubedaLeitura.Compartilhado;
+using ClubedaLeitura.ModuloEmprestimo;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ModuloAmigo
@@ -6,6 +7,7 @@ namespace ClubedaLeitura.ModuloAmigo
     public class TelaAmigo : TelaBase<Amigo>
     {
         private RepositorioAmigo repositorioAmigo;
+        RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
 
         public TelaAmigo(RepositorioAmigo? repositorioAmigo = null)
             : base("Amigo", repositorioAmigo ?? new RepositorioAmigo())
@@ -85,6 +87,53 @@ namespace ClubedaLeitura.ModuloAmigo
             }
         }
 
+        public bool VisualizarEmprestimoAmigo()
+        {
+            Visualizar(true, false, false);
+            Console.WriteLine();
+            Console.Write("Digite o ID do Amigo: ");
+            string strIdAmigo = Console.ReadLine()!;
+            int idAmigo = Convert.ToInt32(strIdAmigo);
+
+            Amigo amigo = repositorioAmigo.SelecionarRegistroPorId(idAmigo);
+
+            if (amigo == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Amigo não encontrado!");
+                Console.ResetColor();
+                DigitarEnterEContinuar.Executar();
+                return false;
+            }
+
+            List<Emprestimo> emprestimosDoAmigo = amigo.ObterEmprestimos(repositorioEmprestimo.SelecionarRegistros());
+
+            if (emprestimosDoAmigo.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Este amigo não possui empréstimos.");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Empréstimos do amigo {amigo.nome}:");
+                Console.ResetColor();
+
+                foreach (var emprestimo in emprestimosDoAmigo)
+                {
+                    Console.WriteLine($"ID: {emprestimo.id}, Revista: {emprestimo.revista.titulo}, " +
+                                      $"Data Empréstimo: {emprestimo.dataEmprestimo.ToShortDateString()}, " +
+                                      $"Data Devolução: {emprestimo.dataDevolucao.ToShortDateString()}, " +
+                                      $"Status: {emprestimo.status}");
+                }
+            }
+
+            DigitarEnterEContinuar.Executar();
+
+            return true;
+        }
+
         public static void AtualizarAmigo(Amigo original, Amigo novosDados)
         {
             original.nome = novosDados.nome;
@@ -100,8 +149,11 @@ namespace ClubedaLeitura.ModuloAmigo
 
         protected override void ImprimirRegistro(Amigo a)
         {
-            Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
+            if (a != null)
+            {
+                Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
                 a.id, a.nome, a.nomeResponsavel, a.telefone);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using ClubedaLeitura.Compartilhado;
+using ClubedaLeitura.ModuloEmprestimo;
 
 namespace ClubedaLeitura.ModuloAmigo
 {
@@ -24,6 +25,13 @@ namespace ClubedaLeitura.ModuloAmigo
         public override string ToString()
         {
             return nome;
+        }
+
+        public List<Emprestimo> ObterEmprestimos(Emprestimo[] todosEmprestimos)
+        {
+            return todosEmprestimos
+                    .Where(e => e != null && e.amigo.id == this.id)
+                    .ToList();
         }
     }
 }

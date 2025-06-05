@@ -1,3 +1,4 @@
+using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloEmprestimo;
 using ClubedaLeitura.Utils;
 
@@ -14,7 +15,7 @@ namespace ClubedaLeitura.Compartilhado
             this.nomeEntidade = telaBase.nomeEntidade;
         }
 
-        public bool ExecutarMenuEntidade(bool mostrarEmprestimo=false)
+        public bool ExecutarMenuEntidade(bool mostrarEmprestimoAmigo=false)
         {
             char opcaoEscolhida = telaBase.ApresentarMenu();
 
@@ -62,11 +63,11 @@ namespace ClubedaLeitura.Compartilhado
                         telaBase.Excluir();
                         break;
                     case '5':
-                        if (mostrarEmprestimo == true)
+                        if (telaBase is TelaAmigo telaAmigo)
                         {
-                            Console.WriteLine($"5 - Visualizar Empréstimo {nomeEntidade}");
-                            Console.WriteLine("Aqui aparecerão os empréstimos cadastrados.");
-                            Console.ReadLine();
+                            telaAmigo.VisualizarEmprestimoAmigo();
+                            //((Emprestimo)emprestimo).Concluir();
+
                         }
                         break;
                     default:

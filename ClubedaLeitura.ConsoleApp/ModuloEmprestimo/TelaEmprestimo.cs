@@ -56,6 +56,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     return null;
                 }
 
+                Console.WriteLine();
                 Console.Write("ID do amigo: ");
                 string inputAmigo = Console.ReadLine();
                 Amigo amigo = repositorioAmigo.SelecionarRegistroPorId(int.Parse(inputAmigo));
@@ -81,6 +82,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     return null;
                 }
 
+                Console.WriteLine();
                 Console.Write("ID da revista: ");
                 string inputRevista = Console.ReadLine();
                 Revista revista = repositorioRevista.SelecionarRegistroPorId(int.Parse(inputRevista));
@@ -121,6 +123,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                 return;
             }
 
+            Console.WriteLine();
             Console.WriteLine("Empréstimos Abertos:");
             foreach (var e in emprestimosAbertos)
             {
@@ -128,13 +131,13 @@ namespace ClubedaLeitura.ModuloEmprestimo
                 ImprimirRegistro(e);
             }
 
+            Console.WriteLine();
             Console.Write("\nDigite o ID do empréstimo a devolver: ");
             int id = int.Parse(Console.ReadLine()!);
 
             var emprestimo = repositorio.SelecionarRegistroPorId(id);
 
             if (emprestimo == null || emprestimo.status != StatusEmprestimo.Aberto)
-            //if (emprestimo == null || ((Emprestimo)emprestimo).status != StatusEmprestimo.Aberto)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Empréstimo não encontrado ou já concluído!");
@@ -144,7 +147,6 @@ namespace ClubedaLeitura.ModuloEmprestimo
             }
 
             emprestimo.Concluir();
-    //((Emprestimo)emprestimo).Concluir();
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Devolução registrada com sucesso!");
