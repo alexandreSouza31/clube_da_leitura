@@ -49,12 +49,12 @@ namespace ClubedaLeitura.ModuloAmigo
                 }
 
                 #region criar BD para fins de teste
-                string nome = "Alexandre";
-                string email = "alexandre@email.com";
-                string telefone = "6399105-5089";
-                //string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.nome, editar);
-                //string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.nomeResponsavel, editar);
-                //string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.telefone, editar);
+                //string nome = "Alexandre";
+                //string email = "alexandre@email.com";
+                //string telefone = "6399105-5089";
+                string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.nome, editar);
+                string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.nomeResponsavel, editar);
+                string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.telefone, editar);
                 #endregion
 
                 string[] nomesCampos = { "nome", "nome responsável", "telefone" };
@@ -104,7 +104,7 @@ namespace ClubedaLeitura.ModuloAmigo
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Amigo não encontrado!");
                 Console.ResetColor();
-                DigitarEnterEContinuar.Executar();
+                direcionar.DirecionarParaMenu(true,false,"amigo");
                 return false;
             }
 
@@ -115,7 +115,7 @@ namespace ClubedaLeitura.ModuloAmigo
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Este amigo não possui empréstimos.");
                 Console.ResetColor();
-                direcionar.DirecionarParaMenu(false, false, "amigo");
+                direcionar.DirecionarParaMenu(true, false, "amigo");
                 return false;
             }
             else

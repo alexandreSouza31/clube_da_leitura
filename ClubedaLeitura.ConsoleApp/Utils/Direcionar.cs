@@ -8,7 +8,7 @@ namespace ClubedaLeitura.Utils
 			{
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine($"\nNenhum(a) {contexto}(a) cadastrado ainda!");
+				Console.WriteLine($"\nNenhum(a) {contexto}(a) cadastrado(a) ainda!");
 				Console.ResetColor();
 			}
 

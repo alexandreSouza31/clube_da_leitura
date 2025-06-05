@@ -64,11 +64,11 @@ namespace ClubedaLeitura.ModuloRevista
 
                 if (!haCaixas)
                 {
-                    Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Nenhuma caixa cadastrada! Não é possível cadastrar revista.");
-                    Console.ResetColor();
-                    DigitarEnterEContinuar.Executar();
+                    //Console.WriteLine();
+                    //Console.ForegroundColor = ConsoleColor.Red;
+                    //Console.WriteLine("Nenhuma caixa cadastrada! Não é possível cadastrar revista.");
+                    //Console.ResetColor();
+                    direcionar.DirecionarParaMenu(false, true, "Caixa");
                     return null;
                 }
 
