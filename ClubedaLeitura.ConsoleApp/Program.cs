@@ -12,7 +12,8 @@ namespace ClubedaLeitura.ConsoleApp
         static void Main(string[] args)
         {
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
-            TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo);
+            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
+            TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo,repositorioEmprestimo);
 
             RepositorioCaixa repositorioCaixa=new RepositorioCaixa();
             TelaCaixa telaCaixa=new TelaCaixa(repositorioCaixa);
@@ -20,7 +21,6 @@ namespace ClubedaLeitura.ConsoleApp
             RepositorioRevista repositorioRevista=new RepositorioRevista();
             TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa, telaCaixa);
 
-            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo,repositorioAmigo,repositorioRevista,telaAmigo,telaRevista);
 
             Direcionar direcionar = new Direcionar();

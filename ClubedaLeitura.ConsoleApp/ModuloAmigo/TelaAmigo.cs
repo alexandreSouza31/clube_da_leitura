@@ -7,12 +7,14 @@ namespace ClubedaLeitura.ModuloAmigo
     public class TelaAmigo : TelaBase<Amigo>
     {
         private RepositorioAmigo repositorioAmigo;
-        RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
+        private RepositorioEmprestimo repositorioEmprestimo;
+        Direcionar direcionar = new Direcionar();
 
-        public TelaAmigo(RepositorioAmigo? repositorioAmigo = null)
-            : base("Amigo", repositorioAmigo ?? new RepositorioAmigo())
+        public TelaAmigo(RepositorioAmigo repositorioAmigo, RepositorioEmprestimo repositorioEmprestimo)
+            : base("Amigo", repositorioAmigo)
         {
-            this.repositorioAmigo = repositorioAmigo ?? new RepositorioAmigo();
+            this.repositorioAmigo = repositorioAmigo;
+            this.repositorioEmprestimo = repositorioEmprestimo;
         }
 
         public void ExecutarMenu()
@@ -113,19 +115,18 @@ namespace ClubedaLeitura.ModuloAmigo
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Este amigo não possui empréstimos.");
                 Console.ResetColor();
+                direcionar.DirecionarParaMenu(false, false, "amigo");
+                return false;
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Empréstimos do amigo {amigo.nome}:");
-                Console.ResetColor();
 
+                Console.Clear();
+                ExibirCabecalho();
+                repositorioEmprestimo.ImprimirCabecalhoTabela();
                 foreach (var emprestimo in emprestimosDoAmigo)
                 {
-                    Console.WriteLine($"ID: {emprestimo.id}, Revista: {emprestimo.revista.titulo}, " +
-                                      $"Data Empréstimo: {emprestimo.dataEmprestimo.ToShortDateString()}, " +
-                                      $"Data Devolução: {emprestimo.dataDevolucao.ToShortDateString()}, " +
-                                      $"Status: {emprestimo.status}");
+                    repositorioEmprestimo.ImprimirRegistro(emprestimo);
                 }
             }
 

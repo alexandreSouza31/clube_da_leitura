@@ -3,7 +3,7 @@ using ClubedaLeitura.ModuloAmigo;
 
 namespace ClubedaLeitura.ModuloEmprestimo
 {
-    class RepositorioEmprestimo : RepositorioBase<Emprestimo>
+    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
     {
         public List<Emprestimo> SelecionarEmprestimosAbertos()
         {
@@ -29,6 +29,29 @@ namespace ClubedaLeitura.ModuloEmprestimo
                        && e.status != null
                        && e.amigo.id == amigo.id
                        && (e.status.ToString() == "Aberto" || e.status.ToString() == "Atrasado"));
+        }
+
+        public void ImprimirCabecalhoTabela()
+        {
+            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12} | {4,-12} | {5,-10}",
+                "ID", "Amigo", "Revista", "Empréstimo", "Devolução", "Status");
+        }
+
+        public void ImprimirRegistro(Emprestimo e)
+        {
+            ConsoleColor cor = Console.ForegroundColor;
+
+            if (e.status.ToString() == "Atrasado")
+                Console.ForegroundColor = ConsoleColor.Red;
+            else if (e.status.ToString() == "Aberto")
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            else
+                Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12:dd/MM/yyyy} | {4,-12:dd/MM/yyyy} | {5,-10}",
+                e.id, e.amigo.nome, e.revista.titulo, e.dataEmprestimo, e.dataDevolucao, e.status);
+
+            Console.ForegroundColor = cor;
         }
     }
 }

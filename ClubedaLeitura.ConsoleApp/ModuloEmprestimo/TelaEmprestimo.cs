@@ -155,28 +155,38 @@ namespace ClubedaLeitura.ModuloEmprestimo
             direcionar.DirecionarParaMenu(true, false, nomeEntidade);
         }
 
-
         protected override void ImprimirCabecalhoTabela()
         {
-            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12} | {4,-12} | {5,-10}",
-                "ID", "Amigo", "Revista", "Empréstimo", "Devolução", "Status");
+            repositorioEmprestimo.ImprimirCabecalhoTabela();
         }
 
         protected override void ImprimirRegistro(Emprestimo e)
         {
-            ConsoleColor cor = Console.ForegroundColor;
-
-            if (e.status.ToString() == "Atrasado")
-                Console.ForegroundColor = ConsoleColor.Red;
-            else if (e.status.ToString() == "Aberto")
-                Console.ForegroundColor = ConsoleColor.Yellow;
-            else
-                Console.ForegroundColor = ConsoleColor.Green;
-
-            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12:dd/MM/yyyy} | {4,-12:dd/MM/yyyy} | {5,-10}",
-                e.id, e.amigo.nome, e.revista.titulo, e.dataEmprestimo, e.dataDevolucao, e.status);
-
-            Console.ForegroundColor = cor;
+            repositorioEmprestimo.ImprimirRegistro(e);
         }
+
+
+        //protected override void ImprimirCabecalhoTabela()
+        //{
+        //    Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12} | {4,-12} | {5,-10}",
+        //        "ID", "Amigo", "Revista", "Empréstimo", "Devolução", "Status");
+        //}
+
+        //protected override void ImprimirRegistro(Emprestimo e)
+        //{
+        //    ConsoleColor cor = Console.ForegroundColor;
+
+        //    if (e.status.ToString() == "Atrasado")
+        //        Console.ForegroundColor = ConsoleColor.Red;
+        //    else if (e.status.ToString() == "Aberto")
+        //        Console.ForegroundColor = ConsoleColor.Yellow;
+        //    else
+        //        Console.ForegroundColor = ConsoleColor.Green;
+
+        //    Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12:dd/MM/yyyy} | {4,-12:dd/MM/yyyy} | {5,-10}",
+        //        e.id, e.amigo.nome, e.revista.titulo, e.dataEmprestimo, e.dataDevolucao, e.status);
+
+        //    Console.ForegroundColor = cor;
+        //}
     }
 }
