@@ -1,5 +1,6 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloAmigo;
+using ClubedaLeitura.ModuloRevista;
 
 namespace ClubedaLeitura.ModuloEmprestimo
 {
@@ -29,6 +30,15 @@ namespace ClubedaLeitura.ModuloEmprestimo
                        && e.status != null
                        && e.amigo.id == amigo.id
                        && (e.status.ToString() == "Aberto" || e.status.ToString() == "Atrasado"));
+        }
+
+        public bool RevistaEstaEmprestada(Revista revista)
+        {
+            return SelecionarRegistros()
+                .Any(e => e != null
+                       && e.revista != null
+                       && e.revista.id == revista.id
+                       && (e.status == StatusEmprestimo.Aberto || e.status == StatusEmprestimo.Atrasado));
         }
 
         public void ImprimirCabecalhoTabela()

@@ -13,7 +13,7 @@ namespace ClubedaLeitura.ModuloRevista
         public int numeroEdicao { get; set; }
         public int anoPublicacao { get; set; }
         public Caixa caixa { get; set; }
-        public StatusEmprestimo status { get; set; } = StatusEmprestimo.Aberto;
+        public StatusRevista status { get; set; } = StatusRevista.Disponivel;
 
         public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa)
         {
@@ -22,7 +22,7 @@ namespace ClubedaLeitura.ModuloRevista
             this.numeroEdicao = numeroEdicao;
             this.anoPublicacao = anoPublicacao;
             this.caixa = caixa;
-            this.status = StatusEmprestimo.Aberto;
+            this.status = StatusRevista.Disponivel;
         }
 
         public Revista() { }
@@ -30,6 +30,11 @@ namespace ClubedaLeitura.ModuloRevista
         public override string ToString()
         {
             return titulo;
+        }
+
+        public enum StatusRevista
+        {
+            Disponivel, Emprestada, Reservada
         }
     }
 }

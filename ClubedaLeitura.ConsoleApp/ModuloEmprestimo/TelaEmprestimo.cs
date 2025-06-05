@@ -2,6 +2,7 @@
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
+using static ClubedaLeitura.ModuloRevista.Revista;
 
 namespace ClubedaLeitura.ModuloEmprestimo
 {
@@ -70,7 +71,9 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
                 if (repositorioEmprestimo.AmigoPossuiEmprestimoAtivo(amigo))
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Este amigo já possui um empréstimo ativo!");
+                    Console.ResetColor();
                     DigitarEnterEContinuar.Executar();
                     return null;
                 }
@@ -94,15 +97,18 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     continue;
                 }
 
-                if (revista.status.ToString() != "Aberto")
+                if (revista.status != StatusRevista.Disponivel)
                 {
-                    Console.WriteLine("Revista não está disponível para empréstimo!");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Existe um empréstimo em andamento para essa revista!");
+                    Console.ResetColor();
                     DigitarEnterEContinuar.Executar();
                     return null;
                 }
 
                 DateTime dataEmprestimo = DateTime.Today;
                 DateTime dataDevolucao = dataEmprestimo.AddDays(revista.caixa?.diasEmprestimo ?? 7);
+                revista.status = StatusRevista.Emprestada;
 
                 return new Emprestimo(amigo, revista, dataEmprestimo, dataDevolucao);
             }
@@ -122,9 +128,10 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
             Console.WriteLine();
             Console.WriteLine("Empréstimos Abertos:");
+            ImprimirCabecalhoTabela();
+
             foreach (var e in emprestimosAbertos)
             {
-                ImprimirCabecalhoTabela();
                 ImprimirRegistro(e);
             }
 

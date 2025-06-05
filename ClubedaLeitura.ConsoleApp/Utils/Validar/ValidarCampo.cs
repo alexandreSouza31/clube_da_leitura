@@ -126,15 +126,15 @@ namespace ClubedaLeitura.Utils
 
                 if (tituloRevista == tituloComparado && numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
                 {
-                    return $"Já existe um amigo cadastrado com o nome '{titulo}' e telefone '{numeroEdicao}'!";
+                    return $"Já existe uma revista cadastrada com o título '{titulo}' e edição '{numeroEdicao}'!";
                 }
                 if (tituloRevista == tituloComparado && revista.id != idAtual)
                 {
-                    return $"Já existe um amigo cadastrado com o nome '{titulo}'!";
+                    return $"Já existe uma revista cadastrada com o título '{titulo}'!";
                 }
                 if (numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
                 {
-                    return $"Já existe um amigo cadastrado com o telefone '{numeroEdicao}'!";
+                    return $"Já existe uma revista cadastrada com edição '{numeroEdicao}'!";
                 }
             }
             return "";

@@ -1,6 +1,7 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloRevista;
+using static ClubedaLeitura.ModuloRevista.Revista;
 
 namespace ClubedaLeitura.ModuloEmprestimo
 {
@@ -27,7 +28,10 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
         public void Concluir()
         {
-            status = StatusEmprestimo.Concluido;
+            this.status = StatusEmprestimo.Concluido;
+
+            if (this.revista != null)
+                this.revista.status = StatusRevista.Disponivel;
         }
 
         public void VerificarAtraso()
