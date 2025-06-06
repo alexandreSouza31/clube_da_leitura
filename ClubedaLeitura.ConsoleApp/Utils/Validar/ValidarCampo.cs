@@ -111,13 +111,24 @@ namespace ClubedaLeitura.Utils
             return "";
         }
 
-        public static string ValidarDuplicidadeRevista(string titulo, int numeroEdicao, Revista[] revistasCadastradas, int idAtual)
+        public static string ValidarDuplicidadeRevista(string titulo, int numeroEdicao, int anoPublicacao, Revista[] revistasCadastradas, int idAtual)
         {
             if (string.IsNullOrWhiteSpace(titulo))
                 return "";
 
             string tituloComparado = titulo.Trim().ToLower();
             int numeroEdicaoComparado = numeroEdicao;
+            int anoPublicacaoComparado = anoPublicacao;
+
+            if (tituloComparado.Length < 2 || tituloComparado.Length >100)
+                return $"Tamanho do título não deve estar entre 2 e 100 caracteres!";
+
+            if (numeroEdicaoComparado <= 0)
+                return $"O número da edição deve ser maior que zero!";
+
+            int anoAtual = DateTime.Now.Year;
+            if (anoPublicacaoComparado < 1900 || anoPublicacaoComparado > anoAtual)
+                return $"Ano de publicação deve ser entre 1900 e {anoAtual}!";
 
             foreach (var revista in revistasCadastradas)
             {

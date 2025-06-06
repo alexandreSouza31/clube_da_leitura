@@ -51,7 +51,7 @@ namespace ClubedaLeitura.ModuloCaixa
 
                 string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
                 string cor = SeletorDeCor.ObterCor(dadosOriginais.cor, editar);
-                int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo", dadosOriginais.diasEmprestimo, editar);
+                int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo (padrão:7)", dadosOriginais.diasEmprestimo, editar);
 
                 if (diasEmprestimo == 0)
                     {

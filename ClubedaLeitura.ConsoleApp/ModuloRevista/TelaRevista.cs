@@ -90,7 +90,7 @@ namespace ClubedaLeitura.ModuloRevista
                 string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
                 var registros = repositorioRevista.SelecionarRegistros();
 
-                string erroDuplicado = ValidarCampo.ValidarDuplicidadeRevista(titulo, numeroEdicao, registros, dadosOriginais.id);
+                string erroDuplicado = ValidarCampo.ValidarDuplicidadeRevista(titulo, numeroEdicao,anoPublicacao, registros, dadosOriginais.id);
 
                 if (!string.IsNullOrEmpty(erroDuplicado))
                 {
