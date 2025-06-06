@@ -60,6 +60,9 @@ namespace ClubedaLeitura.Utils
 
         public static string ValidarDuplicidadeAmigo(string nome, string telefone, Amigo[] amigosCadastrados, int idAtual)
         {
+            if (string.IsNullOrWhiteSpace(nome) || string.IsNullOrWhiteSpace(telefone))
+                return "";
+
             string nomeComparado = nome.Trim().ToLower();
             string telefoneComparado = RemoverNaoNumericos(telefone);
 
@@ -68,51 +71,51 @@ namespace ClubedaLeitura.Utils
                 if (amigo == null)
                     continue;
 
-                string nomeAmigo = amigo.nome.Trim().ToLower();
-                string telefoneAmigo = RemoverNaoNumericos(amigo.telefone);
+                string nomeAmigo = amigo.nome?.Trim().ToLower() ?? "";
+                string telefoneAmigo = RemoverNaoNumericos(amigo.telefone ?? "");
 
                 if (nomeAmigo == nomeComparado && telefoneAmigo == telefoneComparado && amigo.id != idAtual)
-                {
                     return $"Já existe um amigo cadastrado com o nome '{nome}' e telefone '{telefone}'!";
-                }
+
                 if (nomeAmigo == nomeComparado && amigo.id != idAtual)
-                {
                     return $"Já existe um amigo cadastrado com o nome '{nome}'!";
-                }
+
                 if (telefoneAmigo == telefoneComparado && amigo.id != idAtual)
-                {
                     return $"Já existe um amigo cadastrado com o telefone '{telefone}'!";
-                }
             }
+
             return "";
         }
 
         public static string ValidarDuplicidadeCaixa(string etiqueta, Caixa[] caixasCadastradas, int idAtual)
         {
+            if (string.IsNullOrWhiteSpace(etiqueta))
+                return "";
+
             string etiquetaComparada = etiqueta.Trim().ToLower();
 
-            if(etiquetaComparada.Length > 50)
-            {
+            if (etiquetaComparada.Length > 50)
                 return $"Tamanho da etiqueta não deve ultrapassar 50 caracteres!";
-            }
 
             foreach (var caixa in caixasCadastradas)
             {
                 if (caixa == null)
                     continue;
 
-                string nomeEtiqueta = caixa.etiqueta.Trim().ToLower();
+                string nomeEtiqueta = caixa.etiqueta?.Trim().ToLower() ?? "";
 
                 if (nomeEtiqueta == etiquetaComparada && caixa.id != idAtual)
-                {
                     return $"Já existe uma caixa cadastrada com a etiqueta '{etiqueta}'!";
-                }
             }
+
             return "";
         }
 
-        public static string ValidarDuplicidadeRevista(string titulo,int numeroEdicao, Revista[] revistasCadastradas, int idAtual)
+        public static string ValidarDuplicidadeRevista(string titulo, int numeroEdicao, Revista[] revistasCadastradas, int idAtual)
         {
+            if (string.IsNullOrWhiteSpace(titulo))
+                return "";
+
             string tituloComparado = titulo.Trim().ToLower();
             int numeroEdicaoComparado = numeroEdicao;
 
@@ -121,24 +124,22 @@ namespace ClubedaLeitura.Utils
                 if (revista == null)
                     continue;
 
-                string tituloRevista = revista.titulo.Trim().ToLower();
+                string tituloRevista = revista.titulo?.Trim().ToLower() ?? "";
                 int numeroEdicaoRevista = revista.numeroEdicao;
 
                 if (tituloRevista == tituloComparado && numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
-                {
                     return $"Já existe uma revista cadastrada com o título '{titulo}' e edição '{numeroEdicao}'!";
-                }
+
                 if (tituloRevista == tituloComparado && revista.id != idAtual)
-                {
                     return $"Já existe uma revista cadastrada com o título '{titulo}'!";
-                }
+
                 if (numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
-                {
                     return $"Já existe uma revista cadastrada com edição '{numeroEdicao}'!";
-                }
             }
+
             return "";
         }
+
         private static string RemoverNaoNumericos(string texto)
         {
             return new string(texto.Where(char.IsDigit).ToArray());
