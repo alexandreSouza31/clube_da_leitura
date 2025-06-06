@@ -14,11 +14,11 @@ namespace ClubedaLeitura.ConsoleApp
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
             RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
             TelaAmigo telaAmigo = new TelaAmigo(repositorioAmigo,repositorioEmprestimo);
+            RepositorioRevista repositorioRevista=new RepositorioRevista();
 
             RepositorioCaixa repositorioCaixa=new RepositorioCaixa();
-            TelaCaixa telaCaixa=new TelaCaixa(repositorioCaixa);
+            TelaCaixa telaCaixa=new TelaCaixa(repositorioCaixa,repositorioRevista);
 
-            RepositorioRevista repositorioRevista=new RepositorioRevista();
             TelaRevista telaRevista = new TelaRevista(repositorioRevista, repositorioCaixa, telaCaixa);
 
             TelaEmprestimo telaEmprestimo = new TelaEmprestimo(repositorioEmprestimo,repositorioAmigo,repositorioRevista,telaAmigo,telaRevista);

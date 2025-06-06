@@ -11,11 +11,11 @@ namespace ClubedaLeitura.ModuloCaixa
 
         Direcionar direcionar=new Direcionar();
 
-        public TelaCaixa(RepositorioCaixa? repositorioCaixa = null)
-            : base("Caixa", repositorioCaixa ?? new RepositorioCaixa())
+        public TelaCaixa(RepositorioCaixa repositorioCaixa, RepositorioRevista repositorioRevista)
+            : base("Caixa", repositorioCaixa)
         {
-            this.repositorioCaixa = repositorioCaixa ?? new RepositorioCaixa();
-            this.repositorioRevista=repositorioRevista ?? new RepositorioRevista();
+            this.repositorioCaixa = repositorioCaixa;
+            this.repositorioRevista = repositorioRevista;
         }
 
         public void ExecutarMenu()
@@ -50,12 +50,12 @@ namespace ClubedaLeitura.ModuloCaixa
                     }
 
                 #region criar BD para fins de teste
-                string etiqueta = "dsds45d54";
-                    string cor = "verde";
-                    int diasEmprestimo = 9;
-                //string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
-                //string cor = EntradaHelper.ObterEntrada("Cor", dadosOriginais.cor, editar);
-                //int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo", dadosOriginais.diasEmprestimo, editar);
+                //string etiqueta = "dsds45d54";
+                //    string cor = "verde";
+                //    int diasEmprestimo = 9;
+                string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
+                string cor = EntradaHelper.ObterEntrada("Cor", dadosOriginais.cor, editar);
+                int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo", dadosOriginais.diasEmprestimo, editar);
                 #endregion
 
                 if (diasEmprestimo == 0)
@@ -111,6 +111,7 @@ namespace ClubedaLeitura.ModuloCaixa
 
             bool possuiRevistas = repositorioRevista
                 .SelecionarRegistros()
+                .Where(r => r != null && r.caixa != null)
                 .Any(r => r.caixa.id == caixa.id);
 
             if (possuiRevistas)
