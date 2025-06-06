@@ -1,4 +1,5 @@
 using ClubedaLeitura.Configuracoes;
+using ClubedaLeitura.ModuloCaixa;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.Compartilhado
@@ -199,6 +200,8 @@ namespace ClubedaLeitura.Compartilhado
                         continue;
                     }
 
+                    if (PossuiRegistroVinculado(idRegistro)) return false;
+
                     DesejaExcluir desejaExcluir = new DesejaExcluir();
                     var vaiExcluir = desejaExcluir.DesejaMesmoExcluir($"esse {nomeEntidade}");
 
@@ -222,5 +225,10 @@ namespace ClubedaLeitura.Compartilhado
         protected abstract void ImprimirCabecalhoTabela();
 
         protected abstract void ImprimirRegistro(T entidade);
+
+        public virtual bool PossuiRegistroVinculado(int idRegistro)
+        {
+            return false;
+        }
     }
 }

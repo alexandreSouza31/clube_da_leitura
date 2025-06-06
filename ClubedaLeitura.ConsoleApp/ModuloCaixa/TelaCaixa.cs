@@ -1,4 +1,5 @@
 ﻿using ClubedaLeitura.Compartilhado;
+using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ModuloCaixa
@@ -6,11 +7,15 @@ namespace ClubedaLeitura.ModuloCaixa
     class TelaCaixa : TelaBase<Caixa>
     {
         private RepositorioCaixa repositorioCaixa;
+        private RepositorioRevista repositorioRevista;
+
+        Direcionar direcionar=new Direcionar();
 
         public TelaCaixa(RepositorioCaixa? repositorioCaixa = null)
             : base("Caixa", repositorioCaixa ?? new RepositorioCaixa())
         {
             this.repositorioCaixa = repositorioCaixa ?? new RepositorioCaixa();
+            this.repositorioRevista=repositorioRevista ?? new RepositorioRevista();
         }
 
         public void ExecutarMenu()
@@ -95,6 +100,28 @@ namespace ClubedaLeitura.ModuloCaixa
             original.etiqueta = novosDados.etiqueta;
             original.cor = novosDados.cor;
             original.diasEmprestimo = novosDados.diasEmprestimo;
+        }
+
+        public override bool PossuiRegistroVinculado(int idRegistro)
+        {
+            var caixa = repositorioCaixa.SelecionarRegistroPorId(idRegistro);
+
+            if (caixa == null)
+                return false;
+
+            bool possuiRevistas = repositorioRevista
+                .SelecionarRegistros()
+                .Any(r => r.caixa.id == caixa.id);
+
+            if (possuiRevistas)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Não é possível excluir: a caixa possui revista(s) vinculada(s)!");
+                Console.ResetColor();
+                direcionar.DirecionarParaMenu(true, false, "Caixa");
+                return true;
+            }
+            return false;
         }
 
         protected override void ImprimirCabecalhoTabela()

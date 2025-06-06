@@ -1,5 +1,7 @@
 using ClubedaLeitura.Compartilhado;
+using ClubedaLeitura.ModuloCaixa;
 using ClubedaLeitura.ModuloEmprestimo;
+using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ModuloAmigo
@@ -8,6 +10,9 @@ namespace ClubedaLeitura.ModuloAmigo
     {
         private RepositorioAmigo repositorioAmigo;
         private RepositorioEmprestimo repositorioEmprestimo;
+        private RepositorioCaixa repositorioCaixa;
+        private RepositorioRevista repositorioRevista;
+
         Direcionar direcionar = new Direcionar();
 
         public TelaAmigo(RepositorioAmigo repositorioAmigo, RepositorioEmprestimo repositorioEmprestimo)
@@ -15,6 +20,8 @@ namespace ClubedaLeitura.ModuloAmigo
         {
             this.repositorioAmigo = repositorioAmigo;
             this.repositorioEmprestimo = repositorioEmprestimo;
+            this.repositorioCaixa = repositorioCaixa;
+            this.repositorioRevista = repositorioRevista;
         }
 
         public void ExecutarMenu()
@@ -48,14 +55,9 @@ namespace ClubedaLeitura.ModuloAmigo
                     Console.ResetColor();
                 }
 
-                #region criar BD para fins de teste
-                //string nome = "Alexandre";
-                //string email = "alexandre@email.com";
-                //string telefone = "6399105-5089";
                 string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.nome, editar);
                 string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.nomeResponsavel, editar);
                 string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.telefone, editar);
-                #endregion
 
                 string[] nomesCampos = { "nome", "nome responsável", "telefone" };
                 string[] valoresCampos = { nome, email, telefone };
@@ -140,6 +142,25 @@ namespace ClubedaLeitura.ModuloAmigo
             original.nome = novosDados.nome;
             original.nomeResponsavel = novosDados.nomeResponsavel;
             original.telefone = novosDados.telefone;
+        }
+
+        public override bool PossuiRegistroVinculado(int idRegistro)
+        {
+            var amigo = repositorioAmigo.SelecionarRegistroPorId(idRegistro);
+            if (amigo == null)
+                return false;
+
+            List<Emprestimo> emprestimos = amigo.ObterEmprestimos(repositorioEmprestimo.SelecionarRegistros());
+
+            if (emprestimos.Count > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Não é possível excluir: este amigo possui empréstimo(s) vinculado(s)(as)!");
+                Console.ResetColor();
+                direcionar.DirecionarParaMenu(true, false, "Amigo");
+                return true;
+            }
+            return false;
         }
 
         protected override void ImprimirCabecalhoTabela()
