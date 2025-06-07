@@ -51,14 +51,9 @@ namespace ClubedaLeitura.ModuloRevista
                     Console.ResetColor();
                 }
 
-                #region criar BD para fins de teste
-                string titulo = "Anime Do";
-                int numeroEdicao = 01151501996;
-                int anoPublicacao = 1996;
-                //string titulo = EntradaHelper.ObterEntrada("Titulo", dadosOriginais.titulo, editar);
-                //int numeroEdicao = EntradaHelper.ObterEntrada("Número edição", dadosOriginais.numeroEdicao, editar);
-                //int anoPublicacao = EntradaHelper.ObterEntrada("Ano Publicação", dadosOriginais.anoPublicacao, editar);
-                #endregion
+                string titulo = EntradaHelper.ObterEntrada("Titulo", dadosOriginais.titulo, editar);
+                int numeroEdicao = EntradaHelper.ObterEntrada("Número edição", dadosOriginais.numeroEdicao, editar);
+                int anoPublicacao = EntradaHelper.ObterEntrada("Ano Publicação", dadosOriginais.anoPublicacao, editar);
 
                 bool haCaixas = telaCaixa.Visualizar(true, false, false);
 

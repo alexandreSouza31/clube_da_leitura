@@ -78,7 +78,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     return null;
                 }
 
-                bool haRevistas = telaRevista.Visualizar(true, false, false);
+                bool haRevistas = telaRevista.Visualizar(true, false, false, r => r.status == StatusRevista.Disponivel);
                 if (!haRevistas)
                 {
                     direcionar.DirecionarParaMenu(false, true, "Revista");

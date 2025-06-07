@@ -75,7 +75,7 @@ namespace ClubedaLeitura.Compartilhado
             }
         }
 
-        public bool Visualizar(bool exibirCabecalho, bool digitarEnterEContinuar, bool msgAoCadastrar = true)
+        public bool Visualizar(bool exibirCabecalho, bool digitarEnterEContinuar, bool msgAoCadastrar = true, Func<T, bool> filtro = null)
         {
             ExibirCabecalho("visualizar");
 
@@ -88,7 +88,7 @@ namespace ClubedaLeitura.Compartilhado
 
             if (haRegistros == false)
             {
-                if (msgAoCadastrar)
+                if (msgAoCadastrar) 
                 {
                     Console.WriteLine($"Ainda não há {nomeEntidade.ToLower()}s!");
                     direcionar.DirecionarParaMenu(false, false, nomeEntidade);
@@ -101,7 +101,7 @@ namespace ClubedaLeitura.Compartilhado
 
             foreach (T reg in registros)
             {
-                if (reg == null) continue;
+                if (reg == null || (filtro != null && !filtro(reg))) continue;
 
                 if (encontrados == 0)
                 {

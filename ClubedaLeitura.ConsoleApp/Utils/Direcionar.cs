@@ -8,7 +8,10 @@ namespace ClubedaLeitura.Utils
 			{
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine($"\nNenhum(a) {contexto}(a) cadastrado(a) ainda!");
+
+				if(contexto == "Revista") Console.WriteLine($"\nNenhuma {contexto} cadastrada,ou disponível no momento!");
+                else Console.WriteLine($"\nNenhum(a) {contexto}(a) cadastrado(a) ainda!");
+
 				Console.ResetColor();
 			}
 
