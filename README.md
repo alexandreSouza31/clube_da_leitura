@@ -1,5 +1,5 @@
-﻿﻿﻿﻿# Clube da Leitura 📚 
-
+﻿# Clube da Leitura 📚 
+ 
 Este é um sistema de gerenciamento de empréstimos de revistas e caixas, desenvolvido em C#, com foco em cadastro, visualização, exclusão, edição e controle de devoluções
 
 ## Sumário
