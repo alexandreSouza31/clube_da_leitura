@@ -1,3 +1,4 @@
+using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.Configuracoes;
 
 namespace ClubedaLeitura.Apresentacao
@@ -15,8 +16,7 @@ namespace ClubedaLeitura.Apresentacao
             Console.WriteLine("3 - Revistas");
             Console.WriteLine("4 - Empréstimos");
             Console.WriteLine("S - Sair");
-            Console.Write("\nDigite uma opção: ");
-            char telaEscolhida = Convert.ToChar(Console.ReadLine()!.ToUpper());
+            char telaEscolhida = char.ToUpper(EntradaHelper.ObterEntrada<char>("Digite uma opção", '\0', false));
 
             return telaEscolhida;
         }
