@@ -58,25 +58,15 @@ namespace ClubedaLeitura.ModuloCaixa
                         diasEmprestimo = 7;
                     }
 
-                    string[] nomesCampos = { "etiqueta", "cor", "dias empréstimo" };
-                    string[] valoresCampos = { etiqueta, cor, diasEmprestimo.ToString() };
-                    string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
-                    var registros = repositorioCaixa.SelecionarRegistros();
+                string[] nomesCampos = { "etiqueta", "cor", "dias empréstimo" };
+                string[] valoresCampos = { etiqueta, cor, diasEmprestimo.ToString() };
+                string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
+                var registros = repositorioCaixa.SelecionarRegistros();
 
-                    string erroDuplicado = ValidarCampo.ValidarDuplicidadeCaixa(etiqueta, registros, dadosOriginais.id);
+                string erroDuplicado = ValidarCampo.ValidarDuplicidadeCaixa(etiqueta, registros, dadosOriginais.id);
+                erros += erroDuplicado;
 
-                    if (!string.IsNullOrEmpty(erroDuplicado))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nErros encontrados:");
-                        Console.WriteLine(erroDuplicado);
-                        Console.ResetColor();
-                        DigitarEnterEContinuar.Executar();
-                        Console.Clear();
-                        continue;
-                    }
-
-                    if (!string.IsNullOrEmpty(erros))
+                if (!string.IsNullOrEmpty(erros))
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nErros encontrados:");

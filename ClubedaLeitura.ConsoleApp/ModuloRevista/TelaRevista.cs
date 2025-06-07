@@ -86,17 +86,7 @@ namespace ClubedaLeitura.ModuloRevista
                 var registros = repositorioRevista.SelecionarRegistros();
 
                 string erroDuplicado = ValidarCampo.ValidarDuplicidadeRevista(titulo, numeroEdicao,anoPublicacao, registros, dadosOriginais.id);
-
-                if (!string.IsNullOrEmpty(erroDuplicado))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nErros encontrados:");
-                    Console.WriteLine(erroDuplicado);
-                    Console.ResetColor();
-                    DigitarEnterEContinuar.Executar();
-                    Console.Clear();
-                    continue;
-                }
+                erros += erroDuplicado;
 
                 if (!string.IsNullOrEmpty(erros))
                 {
