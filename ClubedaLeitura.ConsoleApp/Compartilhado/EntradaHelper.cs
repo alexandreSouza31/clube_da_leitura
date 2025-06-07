@@ -4,26 +4,42 @@ namespace ClubedaLeitura.Compartilhado
 	{
         public static T ObterEntrada<T>(string campo, T valorAtual, bool editar)
         {
-            Console.Write(editar ? $"{campo} ({valorAtual}): " : $"{campo}: ");
-            string entrada = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(entrada))
-                return valorAtual;
-
-            try
+            while (true)
             {
-                if (typeof(T) == typeof(string))
-                    return (T)(object)entrada;
+                Console.Write(editar ? $"{campo} ({valorAtual}): " : $"{campo}: ");
+                string entrada = Console.ReadLine();
 
-                return (T)Convert.ChangeType(entrada, typeof(T));
-            }
-            catch
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Entrada inválida. Manterá o valor atual.");
-                Console.ResetColor();
-                return valorAtual;
+                if (string.IsNullOrWhiteSpace(entrada))
+                    return valorAtual;
+
+                try
+                {
+                    if (typeof(T) == typeof(string))
+                        return (T)(object)entrada;
+
+                    object convertido = Convert.ChangeType(entrada, typeof(T));
+                    return (T)convertido;
+                }
+                catch (FormatException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Formato inválido. Tente novamente.");
+                    Console.ResetColor();
+                }
+                catch (OverflowException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Número fora do intervalo permitido. Tente novamente.");
+                    Console.ResetColor();
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Entrada inválida. Tente novamente.");
+                    Console.ResetColor();
+                }
             }
         }
+
     }
 }
