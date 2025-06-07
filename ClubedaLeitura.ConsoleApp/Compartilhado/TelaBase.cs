@@ -167,56 +167,58 @@ namespace ClubedaLeitura.Compartilhado
         }
 
 
-        public bool Excluir()
-        {
-            ExibirCabecalho("excluir");
-
-            var haCadastro = repositorio.VerificarExistenciaRegistros();
-
-            if (!haCadastro)
+            public bool Excluir()
             {
-                direcionar.DirecionarParaMenu(false, false, nomeEntidade);
-                return false;
-            }
-            else
-            {
-                Visualizar(true, false, false);
-                while (true)
+                ExibirCabecalho("excluir");
+
+                var haCadastro = repositorio.VerificarExistenciaRegistros();
+
+                if (!haCadastro)
                 {
-                    Console.Write($"\nDigite o Id do {nomeEntidade} para excluir: ");
-                    if (!int.TryParse(Console.ReadLine(), out int idRegistro))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("ID inválido. Tente novamente.");
-                        Console.ResetColor();
-                        continue;
-                    }
-
-                    if (!repositorio.TentarObterRegistro(idRegistro, out var registro))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"{nomeEntidade} não encontrado. Tente novamente.");
-                        Console.ResetColor();
-                        continue;
-                    }
-
-                    if (PossuiRegistroVinculado(idRegistro)) return false;
-
-                    DesejaExcluir desejaExcluir = new DesejaExcluir();
-                    var vaiExcluir = desejaExcluir.DesejaMesmoExcluir($"esse {nomeEntidade}");
-
-                    if (vaiExcluir != "S") return false;
-
-                    repositorio.ExcluirRegistro(idRegistro);
-
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\n{nomeEntidade} excluído(a) com sucesso! id: {registro.id}");
-                    Console.ResetColor();
                     direcionar.DirecionarParaMenu(false, false, nomeEntidade);
+                    return false;
+                }
+                else
+                {
+                    Visualizar(true, false, false);
+                    while (true)
+                    {
+                        Console.Write($"\nDigite o Id do {nomeEntidade} para excluir: ");
+                        if (!int.TryParse(Console.ReadLine(), out int idRegistro))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("ID inválido. Tente novamente.");
+                            Console.ResetColor();
+                            continue;
+                        }
+
+                        if (!repositorio.TentarObterRegistro(idRegistro, out var registro))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine($"{nomeEntidade} não encontrado. Tente novamente.");
+                            Console.ResetColor();
+                            continue;
+                        }
+
+                        if (PossuiRegistroVinculado(idRegistro)) return false;
+
+                        DesejaExcluir desejaExcluir = new DesejaExcluir();
+                        var vaiExcluir = desejaExcluir.DesejaMesmoExcluir($"esse {nomeEntidade}");
+
+                        if (vaiExcluir != "S") return false;
+
+                        repositorio.ExcluirRegistro(idRegistro);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"\n{nomeEntidade} excluído(a) com sucesso! id: {registro.id}");
+                        Console.ResetColor();
+                        bool aindaHaRegistros = repositorio.VerificarExistenciaRegistros();
+                        direcionar.DirecionarParaMenu(aindaHaRegistros, false, nomeEntidade);
+
                     return true;
+                    }
                 }
             }
-        }
 
         public abstract T CriarInstanciaVazia();
 
