@@ -142,7 +142,7 @@ namespace ClubedaLeitura.ModuloAmigo
 
             List<Emprestimo> emprestimos = amigo.ObterEmprestimos(repositorioEmprestimo.SelecionarRegistros());
 
-            if (emprestimos.Count > 0)
+            if (emprestimos.Any(e=>e.status != StatusEmprestimo.Concluido))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Não é possível excluir: este amigo possui empréstimo(s) vinculado(s)(as)!");
