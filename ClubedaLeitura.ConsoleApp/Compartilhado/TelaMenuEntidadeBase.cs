@@ -16,7 +16,7 @@ namespace ClubedaLeitura.Compartilhado
             this.nomeEntidade = telaBase.nomeEntidade;
         }
 
-        public bool ExecutarMenuEntidade(bool mostrarEmprestimoAmigo=false)
+        public bool ExecutarMenuEntidade(bool mostrarEmprestimoAmigo = false)
         {
             char opcaoEscolhida = telaBase.ApresentarMenu();
 
@@ -36,10 +36,6 @@ namespace ClubedaLeitura.Compartilhado
                         telaBase.Visualizar(true, true, false);
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Digite uma opção válida!");
-                        Console.ResetColor();
-                        DigitarEnterEContinuar.Executar(true);
                         break;
                 }
             }
@@ -57,10 +53,6 @@ namespace ClubedaLeitura.Compartilhado
                         if (telaBase is TelaMulta telaMultaAmigo) telaMultaAmigo.VisualizarMultaAmigo();
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Digite uma opção válida!");
-                        Console.ResetColor();
-                        DigitarEnterEContinuar.Executar(true);
                         break;
                 }
             }
@@ -84,10 +76,6 @@ namespace ClubedaLeitura.Compartilhado
                         if (telaBase is TelaAmigo telaAmigo) telaAmigo.VisualizarEmprestimoAmigo();
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Digite uma opção válida!");
-                        Console.ResetColor();
-                        DigitarEnterEContinuar.Executar(true);
                         break;
                 }
             }
