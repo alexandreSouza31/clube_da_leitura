@@ -32,6 +32,18 @@ namespace ClubedaLeitura.ModuloEmprestimo
                        && (e.status.ToString() == "Aberto" || e.status.ToString() == "Atrasado"));
         }
 
+
+        public void AtualizarStatusEmprestimos()
+        {
+            var emprestimos = SelecionarRegistros();
+
+            foreach (var emprestimo in emprestimos)
+            {
+                if (emprestimo != null)
+                    emprestimo.VerificarAtraso();
+            }
+        }
+
         public bool RevistaEstaEmprestada(Revista revista)
         {
             return SelecionarRegistros()

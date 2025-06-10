@@ -1,5 +1,6 @@
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloEmprestimo;
+using ClubedaLeitura.ModuloMulta;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.Compartilhado
@@ -19,8 +20,7 @@ namespace ClubedaLeitura.Compartilhado
         {
             char opcaoEscolhida = telaBase.ApresentarMenu();
 
-            if (opcaoEscolhida == 'S' || opcaoEscolhida == 's')
-                return false;
+            if (opcaoEscolhida == 'S' || opcaoEscolhida == 's') return false;
 
             if (nomeEntidade == "Empréstimo")
             {
@@ -30,13 +30,31 @@ namespace ClubedaLeitura.Compartilhado
                         telaBase.Cadastrar();
                         break;
                     case '2':
-                        if (telaBase is TelaEmprestimo telaEmprestimo)
-                        {
-                            telaEmprestimo.CadastrarDevolucao();
-                        }
+                        if (telaBase is TelaEmprestimo telaEmprestimo) telaEmprestimo.CadastrarDevolucao();
                         break;
                     case '3':
                         telaBase.Visualizar(true, true, false);
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Digite uma opção válida!");
+                        Console.ResetColor();
+                        DigitarEnterEContinuar.Executar(true);
+                        break;
+                }
+            }
+            else if (nomeEntidade == "Multa")
+            {
+                switch (opcaoEscolhida)
+                {
+                    case '1':
+                        if (telaBase is TelaMulta telaMulta) telaMulta.QuitarMulta();
+                        break;
+                    case '2':
+                        telaBase.Visualizar(true, true, false);
+                        break;
+                    case '3':
+                        if (telaBase is TelaMulta telaMultaAmigo) telaMultaAmigo.VisualizarMultaAmigo();
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -63,12 +81,7 @@ namespace ClubedaLeitura.Compartilhado
                         telaBase.Excluir();
                         break;
                     case '5':
-                        if (telaBase is TelaAmigo telaAmigo)
-                        {
-                            telaAmigo.VisualizarEmprestimoAmigo();
-                            //((Emprestimo)emprestimo).Concluir();
-
-                        }
+                        if (telaBase is TelaAmigo telaAmigo) telaAmigo.VisualizarEmprestimoAmigo();
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;

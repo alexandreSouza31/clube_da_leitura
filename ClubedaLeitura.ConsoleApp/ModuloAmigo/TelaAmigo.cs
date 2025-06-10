@@ -83,6 +83,8 @@ namespace ClubedaLeitura.ModuloAmigo
 
         public bool VisualizarEmprestimoAmigo()
         {
+            repositorioEmprestimo.AtualizarStatusEmprestimos();
+
             Visualizar(true, false, false);
             Console.WriteLine();
             Console.Write("Digite o ID do Amigo: ");

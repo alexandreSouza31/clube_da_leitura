@@ -42,7 +42,7 @@ namespace ClubedaLeitura.Compartilhado
 
         public T[] SelecionarRegistros()
         {
-            return registros;
+            return registros.Where(r => r != null).ToArray();
         }
 
         public T SelecionarRegistroPorId(int id)

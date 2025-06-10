@@ -32,6 +32,6 @@ namespace ClubedaLeitura.ModuloAmigo
             return todosEmprestimos
                     .Where(e => e != null && e.amigo.id == this.id)
                     .ToList();
-        }
+        }       
     }
 }

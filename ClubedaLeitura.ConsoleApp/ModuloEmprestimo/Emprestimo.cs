@@ -40,9 +40,8 @@ namespace ClubedaLeitura.ModuloEmprestimo
                 status = StatusEmprestimo.Atrasado;
         }
     }
-
-    public enum StatusEmprestimo
-    {
-        Aberto,Concluido,Atrasado
+        public enum StatusEmprestimo
+        {
+            Aberto, Concluido, Atrasado
+        }
     }
-}
