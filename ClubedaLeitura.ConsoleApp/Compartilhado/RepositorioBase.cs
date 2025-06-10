@@ -1,3 +1,5 @@
+using ClubedaLeitura.ModuloEmprestimo;
+
 namespace ClubedaLeitura.Compartilhado
 {
     public abstract class RepositorioBase<T> where T : IEntidade
@@ -69,6 +71,17 @@ namespace ClubedaLeitura.Compartilhado
         {
             registro = SelecionarRegistroPorId(id);
             return registro != null && !registro.Equals(default(T));
+        }
+
+        public List<T> ObterRegistro<TProp>(T[] registros, TProp entidadeRelacionada, Func<T, TProp?> seletorRelacionamento)
+             where TProp : class, IEntidade
+        {
+            return registros
+                .Where(e =>
+                    e != null &&
+                    seletorRelacionamento(e) != null &&
+                    seletorRelacionamento(e)!.id == entidadeRelacionada.id)
+                .ToList();
         }
     }
 }

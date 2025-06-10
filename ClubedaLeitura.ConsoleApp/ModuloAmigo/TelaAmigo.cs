@@ -101,7 +101,8 @@ namespace ClubedaLeitura.ModuloAmigo
                 return false;
             }
 
-            List<Emprestimo> emprestimosDoAmigo = amigo.ObterEmprestimos(repositorioEmprestimo.SelecionarRegistros());
+            List<Emprestimo> emprestimosDoAmigo = repositorioEmprestimo.ObterRegistro(
+                repositorioEmprestimo.SelecionarRegistros(), amigo, e => e.amigo);
 
             if (emprestimosDoAmigo.Count == 0)
             {
@@ -141,7 +142,7 @@ namespace ClubedaLeitura.ModuloAmigo
             if (amigo == null)
                 return false;
 
-            List<Emprestimo> emprestimos = amigo.ObterEmprestimos(repositorioEmprestimo.SelecionarRegistros());
+            List<Emprestimo> emprestimos = repositorioEmprestimo.ObterRegistro(repositorioEmprestimo.SelecionarRegistros(), amigo, e => e.amigo);
 
             if (emprestimos.Any(e=>e.status != StatusEmprestimo.Concluido))
             {

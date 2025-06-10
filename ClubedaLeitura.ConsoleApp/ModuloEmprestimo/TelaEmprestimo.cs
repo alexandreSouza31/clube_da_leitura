@@ -112,6 +112,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
                 DateTime dataEmprestimo = DateTime.Today;
                 DateTime dataDevolucao = dataEmprestimo.AddDays(revista.caixa?.diasEmprestimo ?? 7);
+                //DateTime dataDevolucao = new DateTime(2025, 5, 5); forçando atraso
 
                 revista.status = StatusRevista.Emprestada;
                 repositorioEmprestimo.AtualizarStatusEmprestimos();
@@ -152,7 +153,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
             if (emprestimo.status == StatusEmprestimo.Atrasado)
             {
-                var multasExistentes = Multa.ObterMultas(emprestimo.amigo, repositorioMulta.SelecionarRegistros());
+                var multasExistentes = repositorioMulta.ObterRegistro(repositorioMulta.SelecionarRegistros(), emprestimo.amigo, m => m.amigo);
                 bool jaTemMulta = multasExistentes.Any(m => m.emprestimo.id == emprestimo.id);
 
                 if (!jaTemMulta)
@@ -163,7 +164,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
             }
 
             var todasMultas = repositorioMulta.SelecionarRegistros();
-            var multasDoAmigo = Multa.ObterMultas(emprestimo.amigo, todasMultas);
+            var multasDoAmigo = repositorioMulta.ObterRegistro(todasMultas, emprestimo.amigo, m => m.amigo);
 
             bool temMultaPendente = multasDoAmigo != null && multasDoAmigo.Any(m => m.status == Multa.StatusMulta.Pendente);
 

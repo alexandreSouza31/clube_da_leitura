@@ -34,7 +34,8 @@ namespace ClubedaLeitura.ModuloMulta
         {
             if (emprestimo == null)
                 return;
-            if (status == StatusMulta.Pendente && DateTime.Today > emprestimo.dataDevolucao)
+
+            if (DateTime.Today > emprestimo.dataDevolucao)
             {
                 int diasAtraso = (DateTime.Today - emprestimo.dataDevolucao).Days;
                 valorAcumulado = diasAtraso * 2.00m;
@@ -47,14 +48,6 @@ namespace ClubedaLeitura.ModuloMulta
 
             if (revista != null) revista.status = StatusRevista.Disponivel;
         }
-
-        public static List<Multa> ObterMultas(Amigo amigo, Multa[] todasMultas)
-        {
-            return todasMultas
-                .Where(e => e != null && e.amigo != null && e.amigo.id == amigo.id)
-                .ToList();
-        }
-
 
         public enum StatusMulta
         {
