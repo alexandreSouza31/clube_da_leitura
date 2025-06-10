@@ -142,8 +142,7 @@ namespace ClubedaLeitura.ModuloMulta
                 ImprimirRegistro(e);
             }
 
-            Console.Write("\nDigite o ID da multa a quitar: ");
-            int id = int.Parse(Console.ReadLine()!);
+            int id = EntradaHelper.ObterEntrada<int>("Digite o ID da multa a quitar", 0, true);
 
             var multa = repositorio.SelecionarRegistroPorId(id);
 
@@ -169,8 +168,7 @@ namespace ClubedaLeitura.ModuloMulta
         {
             repositorioEmprestimo.AtualizarStatusEmprestimos();
             Visualizar(true, false, false);
-            Console.Write("\nDigite o ID do Amigo: ");
-            int idAmigo =Convert.ToInt32(Console.ReadLine());
+            int idAmigo = EntradaHelper.ObterEntrada<int>("Digite o ID do Amigo", 0, true);
 
             var amigo = repositorioAmigo.SelecionarRegistroPorId(idAmigo);
 

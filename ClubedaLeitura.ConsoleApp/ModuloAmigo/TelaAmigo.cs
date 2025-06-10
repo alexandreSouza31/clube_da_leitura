@@ -87,9 +87,8 @@ namespace ClubedaLeitura.ModuloAmigo
 
             Visualizar(true, false, false);
             Console.WriteLine();
-            Console.Write("Digite o ID do Amigo: ");
-            string strIdAmigo = Console.ReadLine()!;
-            int idAmigo = Convert.ToInt32(strIdAmigo);
+
+            int idAmigo = EntradaHelper.ObterEntrada<int>("Digite o ID do Amigo", 0, true);
 
             Amigo amigo = repositorioAmigo.SelecionarRegistroPorId(idAmigo);
 
