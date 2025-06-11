@@ -6,24 +6,24 @@ namespace ClubedaLeitura.ModuloCaixa
     {
         private static int numeroId = 1;
 
-        public int id { get; set; }
-        public string etiqueta { get; set; }
-        public string cor { get; set; }
-        public int diasEmprestimo { get; set; }
+        public int Id { get; set; }
+        public string Etiqueta { get; set; }
+        public string Cor { get; set; }
+        public int DiasEmprestimo { get; set; }
 
         public Caixa(string etiqueta, string cor, int diasEmprestimo = 7)
         {
-            this.id = numeroId++;
-            this.etiqueta = etiqueta;
-            this.cor = cor;
-            this.diasEmprestimo = diasEmprestimo;
+            this.Id = numeroId++;
+            this.Etiqueta = etiqueta;
+            this.Cor = cor;
+            this.DiasEmprestimo = diasEmprestimo;
         }
 
         public Caixa() { }
 
         public override string ToString()
         {
-            return etiqueta;
+            return Etiqueta;
         }
     }
 }

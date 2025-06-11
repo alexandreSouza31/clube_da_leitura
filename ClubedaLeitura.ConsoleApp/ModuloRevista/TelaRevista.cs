@@ -51,9 +51,9 @@ namespace ClubedaLeitura.ModuloRevista
                     Console.ResetColor();
                 }
 
-                string titulo = EntradaHelper.ObterEntrada("Titulo", dadosOriginais.titulo, editar);
-                int numeroEdicao = EntradaHelper.ObterEntrada("Número edição", dadosOriginais.numeroEdicao, editar);
-                int anoPublicacao = EntradaHelper.ObterEntrada("Ano Publicação", dadosOriginais.anoPublicacao, editar);
+                string titulo = EntradaHelper.ObterEntrada("Titulo", dadosOriginais.Titulo, editar);
+                int numeroEdicao = EntradaHelper.ObterEntrada("Número edição", dadosOriginais.NumeroEdicao, editar);
+                int anoPublicacao = EntradaHelper.ObterEntrada("Ano Publicação", dadosOriginais.AnoPublicacao, editar);
 
                 bool haCaixas = telaCaixa.Visualizar(true, false, false);
 
@@ -64,11 +64,11 @@ namespace ClubedaLeitura.ModuloRevista
                 }
 
                 Console.WriteLine();
-                Console.Write(editar ? $"ID da caixa ({dadosOriginais.caixa?.id}): " : "ID da caixa: ");
+                Console.Write(editar ? $"ID da caixa ({dadosOriginais.Caixa?.Id}): " : "ID da caixa: ");
                 string inputCaixa = Console.ReadLine()!;
 
                 Caixa caixa = string.IsNullOrWhiteSpace(inputCaixa)
-                    ? dadosOriginais.caixa
+                    ? dadosOriginais.Caixa
                     : repositorioCaixa.SelecionarRegistroPorId(int.Parse(inputCaixa));
 
                 if (caixa == null)
@@ -85,7 +85,7 @@ namespace ClubedaLeitura.ModuloRevista
                 string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
                 var registros = repositorioRevista.SelecionarRegistros();
 
-                string erroDuplicado = ValidarCampo.ValidarDuplicidadeRevista(titulo, numeroEdicao,anoPublicacao, registros, dadosOriginais.id);
+                string erroDuplicado = ValidarCampo.ValidarDuplicidadeRevista(titulo, numeroEdicao,anoPublicacao, registros, dadosOriginais.Id);
                 erros += erroDuplicado;
 
                 if (!string.IsNullOrEmpty(erros))
@@ -104,10 +104,10 @@ namespace ClubedaLeitura.ModuloRevista
 
         public static void AtualizarRevista(Revista original, Revista novosDados)
         {
-            original.titulo = novosDados.titulo;
-            original.numeroEdicao = novosDados.numeroEdicao;
-            original.anoPublicacao = novosDados.anoPublicacao;
-            original.caixa = novosDados.caixa;
+            original.Titulo = novosDados.Titulo;
+            original.NumeroEdicao = novosDados.NumeroEdicao;
+            original.AnoPublicacao = novosDados.AnoPublicacao;
+            original.Caixa = novosDados.Caixa;
         }
 
         protected override void ImprimirCabecalhoTabela()
@@ -119,7 +119,7 @@ namespace ClubedaLeitura.ModuloRevista
         protected override void ImprimirRegistro(Revista r)
         {
             Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15} | {4, -12} | {5, -10}",
-                r.id, r.titulo, r.numeroEdicao, r.anoPublicacao, r.caixa?.etiqueta, r.status);
+                r.Id, r.Titulo, r.NumeroEdicao, r.AnoPublicacao, r.Caixa?.Etiqueta, r.Status);
         }
     }
 }

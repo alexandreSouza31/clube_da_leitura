@@ -49,9 +49,9 @@ namespace ClubedaLeitura.ModuloCaixa
                         Console.ResetColor();
                     }
 
-                string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.etiqueta, editar);
-                string cor = SeletorDeCor.ObterCor(dadosOriginais.cor, editar);
-                int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo (padrão:7)", dadosOriginais.diasEmprestimo, editar);
+                string etiqueta = EntradaHelper.ObterEntrada("Etiqueta", dadosOriginais.Etiqueta, editar);
+                string cor = SeletorDeCor.ObterCor(dadosOriginais.Cor, editar);
+                int diasEmprestimo = EntradaHelper.ObterEntrada("Dias de Empréstimo (padrão:7)", dadosOriginais.DiasEmprestimo, editar);
 
                 if (diasEmprestimo == 0)
                     {
@@ -63,7 +63,7 @@ namespace ClubedaLeitura.ModuloCaixa
                 string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
                 var registros = repositorioCaixa.SelecionarRegistros();
 
-                string erroDuplicado = ValidarCampo.ValidarDuplicidadeCaixa(etiqueta, registros, dadosOriginais.id);
+                string erroDuplicado = ValidarCampo.ValidarDuplicidadeCaixa(etiqueta, registros, dadosOriginais.Id);
                 erros += erroDuplicado;
 
                 if (!string.IsNullOrEmpty(erros))
@@ -82,9 +82,9 @@ namespace ClubedaLeitura.ModuloCaixa
 
         public static void AtualizarCaixa(Caixa original, Caixa novosDados)
         {
-            original.etiqueta = novosDados.etiqueta;
-            original.cor = novosDados.cor;
-            original.diasEmprestimo = novosDados.diasEmprestimo;
+            original.Etiqueta = novosDados.Etiqueta;
+            original.Cor = novosDados.Cor;
+            original.DiasEmprestimo = novosDados.DiasEmprestimo;
         }
 
         public override bool PossuiRegistroVinculado(int idRegistro)
@@ -96,8 +96,8 @@ namespace ClubedaLeitura.ModuloCaixa
 
             bool possuiRevistas = repositorioRevista
                 .SelecionarRegistros()
-                .Where(r => r != null && r.caixa != null)
-                .Any(r => r.caixa.id == caixa.id);
+                .Where(r => r != null && r.Caixa != null)
+                .Any(r => r.Caixa.Id == caixa.Id);
 
             if (possuiRevistas)
             {
@@ -119,7 +119,7 @@ namespace ClubedaLeitura.ModuloCaixa
         protected override void ImprimirRegistro(Caixa c)
         {
             Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
-                c.id, c.etiqueta, c.cor, c.diasEmprestimo);
+                c.Id, c.Etiqueta, c.Cor, c.DiasEmprestimo);
         }
     }
 }

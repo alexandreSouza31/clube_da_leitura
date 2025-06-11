@@ -71,16 +71,16 @@ namespace ClubedaLeitura.Utils
                 if (amigo == null)
                     continue;
 
-                string nomeAmigo = amigo.nome?.Trim().ToLower() ?? "";
-                string telefoneAmigo = RemoverNaoNumericos(amigo.telefone ?? "");
+                string nomeAmigo = amigo.Nome?.Trim().ToLower() ?? "";
+                string telefoneAmigo = RemoverNaoNumericos(amigo.Telefone ?? "");
 
-                if (nomeAmigo == nomeComparado && telefoneAmigo == telefoneComparado && amigo.id != idAtual)
+                if (nomeAmigo == nomeComparado && telefoneAmigo == telefoneComparado && amigo.Id != idAtual)
                     return $"Já existe um amigo cadastrado com o nome '{nome}' e telefone '{telefone}'!";
 
-                if (nomeAmigo == nomeComparado && amigo.id != idAtual)
+                if (nomeAmigo == nomeComparado && amigo.Id != idAtual)
                     return $"Já existe um amigo cadastrado com o nome '{nome}'!";
 
-                if (telefoneAmigo == telefoneComparado && amigo.id != idAtual)
+                if (telefoneAmigo == telefoneComparado && amigo.Id != idAtual)
                     return $"Já existe um amigo cadastrado com o telefone '{telefone}'!";
             }
 
@@ -102,9 +102,9 @@ namespace ClubedaLeitura.Utils
                 if (caixa == null)
                     continue;
 
-                string nomeEtiqueta = caixa.etiqueta?.Trim().ToLower() ?? "";
+                string nomeEtiqueta = caixa.Etiqueta?.Trim().ToLower() ?? "";
 
-                if (nomeEtiqueta == etiquetaComparada && caixa.id != idAtual)
+                if (nomeEtiqueta == etiquetaComparada && caixa.Id != idAtual)
                     return $"Já existe uma caixa cadastrada com a etiqueta '{etiqueta}'!";
             }
 
@@ -135,16 +135,16 @@ namespace ClubedaLeitura.Utils
                 if (revista == null)
                     continue;
 
-                string tituloRevista = revista.titulo?.Trim().ToLower() ?? "";
-                int numeroEdicaoRevista = revista.numeroEdicao;
+                string tituloRevista = revista.Titulo?.Trim().ToLower() ?? "";
+                int numeroEdicaoRevista = revista.NumeroEdicao;
 
-                if (tituloRevista == tituloComparado && numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
+                if (tituloRevista == tituloComparado && numeroEdicaoRevista == numeroEdicaoComparado && revista.Id != idAtual)
                     return $"Já existe uma revista cadastrada com o título '{titulo}' e edição '{numeroEdicao}'!";
 
-                if (tituloRevista == tituloComparado && revista.id != idAtual)
+                if (tituloRevista == tituloComparado && revista.Id != idAtual)
                     return $"Já existe uma revista cadastrada com o título '{titulo}'!";
 
-                if (numeroEdicaoRevista == numeroEdicaoComparado && revista.id != idAtual)
+                if (numeroEdicaoRevista == numeroEdicaoComparado && revista.Id != idAtual)
                     return $"Já existe uma revista cadastrada com edição '{numeroEdicao}'!";
             }
 

@@ -55,16 +55,16 @@ namespace ClubedaLeitura.ModuloAmigo
                     Console.ResetColor();
                 }
 
-                string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.nome, editar);
-                string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.nomeResponsavel, editar);
-                string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.telefone, editar);
+                string nome = EntradaHelper.ObterEntrada("Nome", dadosOriginais.Nome, editar);
+                string email = EntradaHelper.ObterEntrada("Nome Responsável", dadosOriginais.NomeResponsavel, editar);
+                string telefone = EntradaHelper.ObterEntrada("Telefone", dadosOriginais.Telefone, editar);
 
                 string[] nomesCampos = { "nome", "nome responsável", "telefone" };
                 string[] valoresCampos = { nome, email, telefone };
                 string erros = ValidarCampo.ValidarCampos(nomesCampos, valoresCampos);
                 var registros = repositorioAmigo.SelecionarRegistros();
 
-                string erroDuplicado = ValidarCampo.ValidarDuplicidadeAmigo(nome, telefone, registros, dadosOriginais.id);
+                string erroDuplicado = ValidarCampo.ValidarDuplicidadeAmigo(nome, telefone, registros, dadosOriginais.Id);
                 erros += erroDuplicado;
 
                 if (!string.IsNullOrEmpty(erros))
@@ -102,7 +102,7 @@ namespace ClubedaLeitura.ModuloAmigo
             }
 
             List<Emprestimo> emprestimosDoAmigo = repositorioEmprestimo.ObterRegistro(
-                repositorioEmprestimo.SelecionarRegistros(), amigo, e => e.amigo);
+                repositorioEmprestimo.SelecionarRegistros(), amigo, e => e.Amigo);
 
             if (emprestimosDoAmigo.Count == 0)
             {
@@ -131,9 +131,9 @@ namespace ClubedaLeitura.ModuloAmigo
 
         public static void AtualizarAmigo(Amigo original, Amigo novosDados)
         {
-            original.nome = novosDados.nome;
-            original.nomeResponsavel = novosDados.nomeResponsavel;
-            original.telefone = novosDados.telefone;
+            original.Nome = novosDados.Nome;
+            original.NomeResponsavel = novosDados.NomeResponsavel;
+            original.Telefone = novosDados.Telefone;
         }
 
         public override bool PossuiRegistroVinculado(int idRegistro)
@@ -142,9 +142,9 @@ namespace ClubedaLeitura.ModuloAmigo
             if (amigo == null)
                 return false;
 
-            List<Emprestimo> emprestimos = repositorioEmprestimo.ObterRegistro(repositorioEmprestimo.SelecionarRegistros(), amigo, e => e.amigo);
+            List<Emprestimo> emprestimos = repositorioEmprestimo.ObterRegistro(repositorioEmprestimo.SelecionarRegistros(), amigo, e => e.Amigo);
 
-            if (emprestimos.Any(e=>e.status != StatusEmprestimo.Concluido))
+            if (emprestimos.Any(e=>e.Status != StatusEmprestimo.Concluido))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Não é possível excluir: este amigo possui empréstimo(s) vinculado(s)(as)!");
@@ -166,7 +166,7 @@ namespace ClubedaLeitura.ModuloAmigo
             if (a != null)
             {
                 Console.WriteLine("{0, -5} | {1, -20} | {2, -25} | {3, -15}",
-                a.id, a.nome, a.nomeResponsavel, a.telefone);
+                a.Id, a.Nome, a.NomeResponsavel, a.Telefone);
             }
         }
     }

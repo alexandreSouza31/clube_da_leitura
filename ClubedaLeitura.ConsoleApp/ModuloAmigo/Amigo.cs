@@ -1,5 +1,4 @@
 using ClubedaLeitura.Compartilhado;
-using ClubedaLeitura.ModuloEmprestimo;
 
 namespace ClubedaLeitura.ModuloAmigo
 {
@@ -7,24 +6,24 @@ namespace ClubedaLeitura.ModuloAmigo
     {
         private static int numeroId = 1;
 
-        public int id { get; set; }
-        public string nome { get; set; }
-        public string nomeResponsavel { get; set; }
-        public string telefone { get; set; }
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string NomeResponsavel { get; set; }
+        public string Telefone { get; set; }
 
         public Amigo(string nome, string nomeResponsavel, string telefone)
         {
-            this.id = numeroId++;
-            this.nome = nome;
-            this.nomeResponsavel = nomeResponsavel;
-            this.telefone = telefone;
+            this.Id = numeroId++;
+            this.Nome = nome;
+            this.NomeResponsavel = nomeResponsavel;
+            this.Telefone = telefone;
         }
 
         public Amigo() { }
 
         public override string ToString()
         {
-            return nome;
+            return Nome;
         }     
     }
 }
