@@ -29,11 +29,11 @@ namespace ClubedaLeitura.Compartilhado
             ExibirCabecalho();
             Console.WriteLine();
 
-            if(nomeEntidade == "Multa")
+            if(nomeEntidade == "Reserva")
             {
-                Console.WriteLine($"1 - Quitar {nomeEntidade}");
+                Console.WriteLine($"1 - Cadastrar {nomeEntidade}");
                 Console.WriteLine($"2 - Visualizar {nomeEntidade}");
-                Console.WriteLine($"3 - Visualizar {nomeEntidade} de Amigo");
+                Console.WriteLine($"3 - Cancelar {nomeEntidade}");
             }
             else if(nomeEntidade == "Empréstimo")
             {

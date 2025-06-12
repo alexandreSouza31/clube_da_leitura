@@ -4,7 +4,7 @@ namespace ClubedaLeitura.Compartilhado
 {
     public abstract class RepositorioBase<T> where T : IEntidade
     {
-        private T[] registros = new T[100];
+        protected T[] registros = new T[100];
         private int contadorRegistros = 0;
 
         public void CadastrarRegistro(T novoRegistro)

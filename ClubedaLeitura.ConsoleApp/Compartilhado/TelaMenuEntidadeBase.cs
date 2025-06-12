@@ -1,5 +1,6 @@
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloEmprestimo;
+using ClubedaLeitura.ModuloReserva;
 
 namespace ClubedaLeitura.Compartilhado
 {
@@ -32,6 +33,23 @@ namespace ClubedaLeitura.Compartilhado
                         break;
                     case '3':
                         telaBase.Visualizar(true, true, false);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (nomeEntidade == "Reserva")
+            {
+                switch (opcaoEscolhida)
+                {
+                    case '1':
+                        if (telaBase is TelaReserva telaReservaCriar) telaReservaCriar.Cadastrar();
+                        break;
+                    case '2':
+                        telaBase.Visualizar(true, true, false);
+                        break;
+                    case '3':
+                        if (telaBase is TelaReserva telaReservaCancelar) telaReservaCancelar.CancelarReserva();
                         break;
                     default:
                         break;
