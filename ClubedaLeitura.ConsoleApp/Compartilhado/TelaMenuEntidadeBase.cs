@@ -1,7 +1,5 @@
 using ClubedaLeitura.ModuloAmigo;
 using ClubedaLeitura.ModuloEmprestimo;
-using ClubedaLeitura.ModuloMulta;
-using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.Compartilhado
 {
@@ -34,23 +32,6 @@ namespace ClubedaLeitura.Compartilhado
                         break;
                     case '3':
                         telaBase.Visualizar(true, true, false);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (nomeEntidade == "Multa")
-            {
-                switch (opcaoEscolhida)
-                {
-                    case '1':
-                        if (telaBase is TelaMulta telaMulta) telaMulta.QuitarMulta();
-                        break;
-                    case '2':
-                        telaBase.Visualizar(true, true, false);
-                        break;
-                    case '3':
-                        if (telaBase is TelaMulta telaMultaAmigo) telaMultaAmigo.VisualizarMultaAmigo();
                         break;
                     default:
                         break;

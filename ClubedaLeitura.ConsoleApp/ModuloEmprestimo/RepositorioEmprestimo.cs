@@ -10,14 +10,14 @@ namespace ClubedaLeitura.ModuloEmprestimo
         {
             return SelecionarRegistros()
                 .Where(e => e != null &&
-                    (e.status == StatusEmprestimo.Aberto || e.status == StatusEmprestimo.Atrasado))
+                    (e.Status == StatusEmprestimo.Aberto || e.Status == StatusEmprestimo.Atrasado))
                 .ToList();
         }
 
         public List<Emprestimo> SelecionarEmprestimosFechados()
         {
             return SelecionarRegistros()
-                .Where(e => e.status.ToString() == "Concluído")
+                .Where(e => e.Status.ToString() == "Concluído")
                 .ToList();
         }
 
@@ -26,10 +26,10 @@ namespace ClubedaLeitura.ModuloEmprestimo
         {
             return SelecionarRegistros()
                 .Any(e => e != null
-                       && e.amigo != null
-                       && e.status != null
-                       && e.amigo.id == amigo.id
-                       && (e.status.ToString() == "Aberto" || e.status.ToString() == "Atrasado"));
+                       && e.Amigo != null
+                       && e.Status != null
+                       && e.Amigo.Id == amigo.Id
+                       && (e.Status.ToString() == "Aberto" || e.Status.ToString() == "Atrasado"));
         }
 
 
@@ -39,8 +39,25 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
             foreach (var emprestimo in emprestimos)
             {
-                if (emprestimo != null)
-                    emprestimo.VerificarAtraso();
+                if (emprestimo == null)
+                    continue;
+
+                GerarMultaSeAtrasado(emprestimo);
+            }
+        }
+
+        public void GerarMultaSeAtrasado(Emprestimo emprestimo)
+        {
+            if (emprestimo.Status == StatusEmprestimo.Aberto && DateTime.Today > emprestimo.DataDevolucao)
+            {
+                emprestimo.Status = StatusEmprestimo.Atrasado;
+
+                if (emprestimo.Multa == null)
+                {
+                    TimeSpan atraso = DateTime.Today.Subtract(emprestimo.DataDevolucao);
+                    decimal valorMulta = 2.00m * atraso.Days;
+                    emprestimo.Multa = new Multa(valorMulta);
+                }
             }
         }
 
@@ -48,30 +65,32 @@ namespace ClubedaLeitura.ModuloEmprestimo
         {
             return SelecionarRegistros()
                 .Any(e => e != null
-                       && e.revista != null
-                       && e.revista.id == revista.id
-                       && (e.status == StatusEmprestimo.Aberto || e.status == StatusEmprestimo.Atrasado));
+                       && e.Revista != null
+                       && e.Revista.Id == revista.Id
+                       && (e.Status == StatusEmprestimo.Aberto || e.Status == StatusEmprestimo.Atrasado));
         }
 
         public void ImprimirCabecalhoTabela()
         {
-            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12} | {4,-12} | {5,-10}",
-                "ID", "Amigo", "Revista", "Empréstimo", "Devolução", "Status");
+            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12} | {4,-12} | {5,-10} | {6,-10}",
+                "ID", "Amigo", "Revista", "Empréstimo", "Devolução", "Status", "Multa");
         }
 
         public void ImprimirRegistro(Emprestimo e)
         {
             ConsoleColor cor = Console.ForegroundColor;
 
-            if (e.status.ToString() == "Atrasado")
+            if (e.Status.ToString() == "Atrasado")
                 Console.ForegroundColor = ConsoleColor.Red;
-            else if (e.status.ToString() == "Aberto")
+            else if (e.Status.ToString() == "Aberto")
                 Console.ForegroundColor = ConsoleColor.Yellow;
             else
                 Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12:dd/MM/yyyy} | {4,-12:dd/MM/yyyy} | {5,-10}",
-                e.id, e.amigo.nome, e.revista.titulo, e.dataEmprestimo, e.dataDevolucao, e.status);
+            string valorMulta = e.Multa != null ? $"R$ {e.Multa.Valor:F2}" : "-";
+
+            Console.WriteLine("{0,-5} | {1,-20} | {2,-20} | {3,-12:dd/MM/yyyy} | {4,-12:dd/MM/yyyy} | {5,-10} | {6,-10}",
+                e.Id, e.Amigo.Nome, e.Revista.Titulo, e.DataEmprestimo, e.DataDevolucao, e.Status, valorMulta);
 
             Console.ForegroundColor = cor;
         }

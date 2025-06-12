@@ -1,6 +1,5 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloAmigo;
-using ClubedaLeitura.ModuloMulta;
 using ClubedaLeitura.ModuloRevista;
 using static ClubedaLeitura.ModuloRevista.Revista;
 
@@ -25,6 +24,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
             this.DataEmprestimo = dataEmprestimo;
             this.DataDevolucao = dataDevolucao;
             this.Status = StatusEmprestimo.Aberto;
+            this.Multa = null!;
         }
 
         public void Concluir()

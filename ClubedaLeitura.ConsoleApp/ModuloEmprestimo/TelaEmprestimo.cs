@@ -1,6 +1,5 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloAmigo;
-using ClubedaLeitura.ModuloMulta;
 using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 using static ClubedaLeitura.ModuloRevista.Revista;
@@ -12,7 +11,6 @@ namespace ClubedaLeitura.ModuloEmprestimo
         private readonly RepositorioEmprestimo repositorioEmprestimo;
         private readonly RepositorioAmigo repositorioAmigo;
         private readonly RepositorioRevista repositorioRevista;
-        private readonly RepositorioMulta repositorioMulta;
         private readonly TelaAmigo telaAmigo;
         private readonly TelaRevista telaRevista;
         private readonly Direcionar direcionar = new();
@@ -20,7 +18,6 @@ namespace ClubedaLeitura.ModuloEmprestimo
         public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo,
                               RepositorioAmigo repositorioAmigo,
                               RepositorioRevista repositorioRevista,
-                              RepositorioMulta repositorioMulta,
                               TelaAmigo telaAmigo,
                               TelaRevista telaRevista)
             : base("Empréstimo", repositorioEmprestimo)
@@ -30,7 +27,6 @@ namespace ClubedaLeitura.ModuloEmprestimo
             this.repositorioRevista = repositorioRevista;
             this.telaAmigo = telaAmigo;
             this.telaRevista = telaRevista;
-            this.repositorioMulta = repositorioMulta;
         }
 
         public void ExecutarMenu()
@@ -82,7 +78,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     return null;
                 }
 
-                bool haRevistas = telaRevista.Visualizar(true, false, false, r => r.status == StatusRevista.Disponivel);
+                bool haRevistas = telaRevista.Visualizar(true, false, false, r => r.Status == StatusRevista.Disponivel);
                 if (!haRevistas)
                 {
                     direcionar.DirecionarParaMenu(false, true, "Revista");
@@ -101,7 +97,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     continue;
                 }
 
-                if (revista.status != StatusRevista.Disponivel)
+                if (revista.Status != StatusRevista.Disponivel)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Existe um empréstimo em andamento para essa revista!");
@@ -111,10 +107,12 @@ namespace ClubedaLeitura.ModuloEmprestimo
                 }
 
                 DateTime dataEmprestimo = DateTime.Today;
-                DateTime dataDevolucao = dataEmprestimo.AddDays(revista.caixa?.diasEmprestimo ?? 7);
-                //DateTime dataDevolucao = new DateTime(2025, 5, 5); forçando atraso
+                DateTime dataDevolucao = dataEmprestimo.AddDays(revista.Caixa?.DiasEmprestimo ?? 7);
+                #region forçando atraso para testes
+                //DateTime dataDevolucao = new DateTime(2025, 5, 31);
+                #endregion forçando atraso
 
-                revista.status = StatusRevista.Emprestada;
+                revista.Status = StatusRevista.Emprestada;
                 repositorioEmprestimo.AtualizarStatusEmprestimos();
                 return new Emprestimo(amigo, revista, dataEmprestimo, dataDevolucao);
             }
@@ -133,6 +131,8 @@ namespace ClubedaLeitura.ModuloEmprestimo
             }
 
             Console.WriteLine("\nEmpréstimos Abertos:");
+            repositorioEmprestimo.AtualizarStatusEmprestimos();
+
             ImprimirCabecalhoTabela();
             foreach (var e in emprestimosAbertos)
                 ImprimirRegistro(e);
@@ -142,7 +142,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
             var emprestimo = repositorioEmprestimo.SelecionarRegistroPorId(id);
 
-            if (emprestimo == null || (emprestimo.status != StatusEmprestimo.Aberto && emprestimo.status != StatusEmprestimo.Atrasado))
+            if (emprestimo == null || (emprestimo.Status != StatusEmprestimo.Aberto && emprestimo.Status != StatusEmprestimo.Atrasado))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Empréstimo não encontrado ou já concluído!");
@@ -151,31 +151,8 @@ namespace ClubedaLeitura.ModuloEmprestimo
                 return;
             }
 
-            if (emprestimo.status == StatusEmprestimo.Atrasado)
-            {
-                var multasExistentes = repositorioMulta.ObterRegistro(repositorioMulta.SelecionarRegistros(), emprestimo.amigo, m => m.amigo);
-                bool jaTemMulta = multasExistentes.Any(m => m.emprestimo.id == emprestimo.id);
-
-                if (!jaTemMulta)
-                {
-                    Multa novaMulta = new Multa(emprestimo, emprestimo.amigo, emprestimo.revista);
-                    repositorioMulta.CadastrarRegistro(novaMulta);
-                }
-            }
-
-            var todasMultas = repositorioMulta.SelecionarRegistros();
-            var multasDoAmigo = repositorioMulta.ObterRegistro(todasMultas, emprestimo.amigo, m => m.amigo);
-
-            bool temMultaPendente = multasDoAmigo != null && multasDoAmigo.Any(m => m.status == Multa.StatusMulta.Pendente);
-
-            if (temMultaPendente)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Este amigo possui multas pendentes! Quite-as antes de devolver o empréstimo.");
-                Console.ResetColor();
-                direcionar.DirecionarParaMenu(true, false, nomeEntidade);
-                return;
-            }
+            bool multaQuitada = QuitarMulta(emprestimo);
+            if (!multaQuitada) return;
 
             emprestimo.Concluir();
 
@@ -185,6 +162,42 @@ namespace ClubedaLeitura.ModuloEmprestimo
 
             direcionar.DirecionarParaMenu(true, false, nomeEntidade);
         }
+
+        private bool QuitarMulta(Emprestimo emprestimo)
+        {
+            repositorioEmprestimo.GerarMultaSeAtrasado(emprestimo);
+
+            if (emprestimo.Multa != null && !emprestimo.Multa.EstaPaga)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"\n{emprestimo.Amigo.Nome} possui uma multa de R$ {emprestimo.Multa.Valor:F2}.");
+                Console.Write("Deseja quitar agora? (s/n): ");
+                Console.ResetColor();
+
+                string? resposta = Console.ReadLine();
+
+                if (resposta?.ToLower() != "s")
+                {                  
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine();
+                    Console.WriteLine("Multa pendente!");
+                    Console.ResetColor();
+                    direcionar.DirecionarParaMenu(true, false, "Empréstimo");
+                    return false;
+                }
+
+                emprestimo.Multa.Pagar();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine();
+                Console.WriteLine("Multa quitada com sucesso!");
+                Console.WriteLine();
+
+                Console.ResetColor();
+                return true;
+            }
+            return true;
+        }
+
 
         protected override void ImprimirCabecalhoTabela()
         {
