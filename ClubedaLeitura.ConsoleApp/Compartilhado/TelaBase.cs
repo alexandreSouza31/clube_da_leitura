@@ -53,7 +53,8 @@ namespace ClubedaLeitura.Compartilhado
             
             Console.WriteLine("S - Sair");
             Console.Write("\nDigite uma opção: ");
-            char opcaoEscolhida = Convert.ToChar(Console.ReadLine()!.ToUpper()[0]);
+            string entrada = EntradaHelper.ObterEntrada("Opção", " ", false);
+            char opcaoEscolhida = entrada.ToUpper()[0];
 
             return opcaoEscolhida;
         }
@@ -73,7 +74,7 @@ namespace ClubedaLeitura.Compartilhado
                 repositorio.CadastrarRegistro(novosDados);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n{nomeEntidade} cadastrado(a) com sucesso! ID: {novosDados.id}");
+                Console.WriteLine($"\n{nomeEntidade} cadastrado(a) com sucesso! ID: {novosDados.Id}");
                 Console.ResetColor();
 
                 direcionar.DirecionarParaMenu(true, false, nomeEntidade);
@@ -81,7 +82,7 @@ namespace ClubedaLeitura.Compartilhado
             }
         }
 
-        public bool Visualizar(bool exibirCabecalho, bool digitarEnterEContinuar, bool msgAoCadastrar = true, Func<T, bool> filtro = null)
+        public bool Visualizar(bool exibirCabecalho, bool digitarEnterEContinuar, bool msgAoCadastrar = true, Func<T, bool> filtro = null!)
         {
             ExibirCabecalho("visualizar");
 
@@ -159,12 +160,12 @@ namespace ClubedaLeitura.Compartilhado
                 }
 
                 var novosDados = ObterNovosDados(registroExistente, true);
-                novosDados.id = registroExistente.id;
+                novosDados.Id = registroExistente.Id;
 
                 repositorio.EditarRegistro(idRegistro, novosDados);
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\n{nomeEntidade} editado(a) com sucesso! id: {novosDados.id}");
+                Console.WriteLine($"\n{nomeEntidade} editado(a) com sucesso! id: {novosDados.Id}");
                 Console.ResetColor();
 
                 direcionar.DirecionarParaMenu(true, false, nomeEntidade);
@@ -216,7 +217,7 @@ namespace ClubedaLeitura.Compartilhado
                         repositorio.ExcluirRegistro(idRegistro);
 
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"\n{nomeEntidade} excluído(a) com sucesso! id: {registro.id}");
+                        Console.WriteLine($"\n{nomeEntidade} excluído(a) com sucesso! id: {registro.Id}");
                         Console.ResetColor();
                         bool aindaHaRegistros = repositorio.VerificarExistenciaRegistros();
                         direcionar.DirecionarParaMenu(aindaHaRegistros, false, nomeEntidade);
