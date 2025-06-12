@@ -20,6 +20,9 @@ Este é um sistema de gerenciamento de empréstimos de revistas e caixas, desenv
 ##### GIF da aplicação - Clique no GIF para dar Play/Pause
 ![image](https://imgur.com/r1SNu5g.gif)
 
+##### Módulo de Multas e Reservas
+![image](https://i.imgur.com/GhV6fjR.gif)
+
 ###     ✅ 
 - Cadastro de Amigos
 
@@ -60,6 +63,24 @@ Este é um sistema de gerenciamento de empréstimos de revistas e caixas, desenv
    - Validação de disponibilidade da revista
   
    - Bloqueio de múltiplos empréstimos por amigo
+   
+- Multas por atraso
+   - Geração automática de multa no momento da devolução atrasada
+   - Visualização de multas pendentes
+   - Quitação de multas por ID
+
+- **Sistema de Reservas**
+   - Criação de reservas para revistas
+   - Impede o empréstimo de revistas reservadas
+   - Cancelamento de reservas ativas
+   - Indicação de status "Reservada" na visualização de revistas
+
+- **Recursos adicionais**
+   - Edição de cadastros com possibilidade de manter valores
+   - Visualização em formato de tabela
+   - Exclusão de registros por ID
+   - Mensagens interativas no terminal
+   - Paleta de cores amigável para caixas
 
 - Recursos adicionais
 
@@ -106,23 +127,30 @@ Este é um sistema de gerenciamento de empréstimos de revistas e caixas, desenv
 │   ├── ModuloEmprestimo
 │   │   ├── Emprestimo.cs
 │   │   ├── ImprimirEmprestimo.cs
+│   │   ├── Multa.cs
 │   │   ├── RepositorioEmprestimo.cs
 │   │   └── TelaEmprestimo.cs
+│   ├── ModuloReserva
+│   │   ├── RepositorioReserva.cs
+│   │   ├── Reserva.cs
+│   │   └── TelaReserva.cs
 │   ├── ModuloRevista
-│   │   └── (em desenvolvimento ou ausente)
+│   │   ├── RepositorioRevista.cs
+│   │   ├── Revista.cs
+│   │   └── TelaRevista.cs
 │   ├── Utils
 │   │   ├── DesejaExcluir.cs
 │   │   ├── DigitarEnterEContinuar.cs
 │   │   ├── Direcionar.cs
 │   │   ├── ResultadoDirecionamento.cs
 │   │   └── Validar
-│   │       └── ValidarCampo.cs
+│   │       └── ValidaCampo.cs
 │   ├── Program.cs
-├── ClubedaLeitura.sln
-├── .gitignore
+│   └── ClubedaLeitura.ConsoleApp.csproj
 ├── .gitattributes
+├── .gitignore
+├── ClubedaLeitura.sln
 └── README.md
-
 
 ```
 
