@@ -4,7 +4,7 @@ using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ModuloRevista
 {
-    class TelaRevista : TelaBase<Revista>
+    internal class TelaRevista : TelaBase<Revista>
     {
         private RepositorioRevista repositorioRevista;
         private RepositorioCaixa repositorioCaixa;

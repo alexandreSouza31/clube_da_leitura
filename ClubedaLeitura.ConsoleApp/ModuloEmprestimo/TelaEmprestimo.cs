@@ -1,5 +1,6 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloAmigo;
+using ClubedaLeitura.ModuloReserva;
 using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 using static ClubedaLeitura.ModuloRevista.Revista;
@@ -11,6 +12,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
         private readonly RepositorioEmprestimo repositorioEmprestimo;
         private readonly RepositorioAmigo repositorioAmigo;
         private readonly RepositorioRevista repositorioRevista;
+        private readonly RepositorioReserva repositorioReserva;
         private readonly TelaAmigo telaAmigo;
         private readonly TelaRevista telaRevista;
         private readonly Direcionar direcionar = new();
@@ -18,6 +20,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
         public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo,
                               RepositorioAmigo repositorioAmigo,
                               RepositorioRevista repositorioRevista,
+                              RepositorioReserva repositorioReserva,
                               TelaAmigo telaAmigo,
                               TelaRevista telaRevista)
             : base("Empréstimo", repositorioEmprestimo)
@@ -27,6 +30,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
             this.repositorioRevista = repositorioRevista;
             this.telaAmigo = telaAmigo;
             this.telaRevista = telaRevista;
+            this.repositorioReserva = repositorioReserva;
         }
 
         public void ExecutarMenu()
@@ -106,11 +110,17 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     return null!;
                 }
 
+                if (repositorioReserva.ExisteReservaAtivaParaRevista(revista))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Essa revista possui uma reserva ativa!");
+                    Console.ResetColor();
+                    direcionar.DirecionarParaMenu(true, false, "Empréstimo");
+                    return null!;
+                }
+
                 DateTime dataEmprestimo = DateTime.Today;
                 DateTime dataDevolucao = dataEmprestimo.AddDays(revista.Caixa?.DiasEmprestimo ?? 7);
-                #region forçando atraso para testes
-                //DateTime dataDevolucao = new DateTime(2025, 5, 31);
-                #endregion forçando atraso
 
                 revista.Status = StatusRevista.Emprestada;
                 repositorioEmprestimo.AtualizarStatusEmprestimos();

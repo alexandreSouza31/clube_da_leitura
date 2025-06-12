@@ -1,6 +1,6 @@
 ﻿using ClubedaLeitura.Compartilhado;
 using ClubedaLeitura.ModuloCaixa;
-using ClubedaLeitura.ModuloEmprestimo;
+using ClubedaLeitura.ModuloReserva;
 
 namespace ClubedaLeitura.ModuloRevista
 {
@@ -35,6 +35,11 @@ namespace ClubedaLeitura.ModuloRevista
         public enum StatusRevista
         {
             Disponivel, Emprestada, Reservada
+        }
+
+        public bool PossuiReservaAtiva(List<Reserva> reservas)
+        {
+            return reservas.Any(r => r.Revista.Id == this.Id && r.Status == StatusReserva.Ativa);
         }
     }
 }
