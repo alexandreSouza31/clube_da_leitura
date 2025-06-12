@@ -7,7 +7,7 @@ namespace ClubedaLeitura.Compartilhado
             while (true)
             {
                 Console.Write(editar ? $"{campo} ({valorAtual}): " : $"{campo}: ");
-                string entrada = Console.ReadLine();
+                string entrada = Console.ReadLine()!;
 
                 if (string.IsNullOrWhiteSpace(entrada))
                     return valorAtual;

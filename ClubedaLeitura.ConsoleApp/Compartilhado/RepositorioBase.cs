@@ -20,9 +20,9 @@ namespace ClubedaLeitura.Compartilhado
         {
             for (int i = 0; i < registros.Length; i++)
             {
-                if (registros[i] != null && registros[i].id == id)
+                if (registros[i] != null && registros[i].Id == id)
                 {
-                    registros[i] = default;
+                    registros[i] = default!;
                     return true;
                 }
             }
@@ -33,7 +33,7 @@ namespace ClubedaLeitura.Compartilhado
         {
             for (int i = 0; i < registros.Length; i++)
             {
-                if (registros[i] != null && registros[i].id == id)
+                if (registros[i] != null && registros[i].Id == id)
                 {
                     registros[i] = novosDados;
                     return true;
@@ -51,10 +51,10 @@ namespace ClubedaLeitura.Compartilhado
         {
             for (int i = 0; i < contadorRegistros; i++)
             {
-                if (registros[i] != null && registros[i].id == id)
+                if (registros[i] != null && registros[i].Id == id)
                     return registros[i];
             }
-            return default;
+            return default!;
         }
 
         public bool VerificarExistenciaRegistros()
@@ -80,7 +80,7 @@ namespace ClubedaLeitura.Compartilhado
                 .Where(e =>
                     e != null &&
                     seletorRelacionamento(e) != null &&
-                    seletorRelacionamento(e)!.id == entidadeRelacionada.id)
+                    seletorRelacionamento(e)!.Id == entidadeRelacionada.Id)
                 .ToList();
         }
     }

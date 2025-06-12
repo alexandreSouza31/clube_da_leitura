@@ -1,7 +1,5 @@
 using ClubedaLeitura.Compartilhado;
-using ClubedaLeitura.ModuloCaixa;
 using ClubedaLeitura.ModuloEmprestimo;
-using ClubedaLeitura.ModuloRevista;
 using ClubedaLeitura.Utils;
 
 namespace ClubedaLeitura.ModuloAmigo
@@ -10,8 +8,6 @@ namespace ClubedaLeitura.ModuloAmigo
     {
         private RepositorioAmigo repositorioAmigo;
         private RepositorioEmprestimo repositorioEmprestimo;
-        private RepositorioCaixa repositorioCaixa;
-        private RepositorioRevista repositorioRevista;
 
         Direcionar direcionar = new Direcionar();
 
@@ -20,8 +16,6 @@ namespace ClubedaLeitura.ModuloAmigo
         {
             this.repositorioAmigo = repositorioAmigo;
             this.repositorioEmprestimo = repositorioEmprestimo;
-            this.repositorioCaixa = repositorioCaixa;
-            this.repositorioRevista = repositorioRevista;
         }
 
         public void ExecutarMenu()

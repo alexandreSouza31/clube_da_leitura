@@ -54,12 +54,12 @@ namespace ClubedaLeitura.ModuloEmprestimo
                 if (!haAmigos)
                 {
                     direcionar.DirecionarParaMenu(false, true, "Amigo");
-                    return null;
+                    return null!;
                 }
 
                 Console.WriteLine();
                 Console.Write("ID do amigo: ");
-                string inputAmigo = Console.ReadLine();
+                string inputAmigo = Console.ReadLine()!;
                 Amigo amigo = repositorioAmigo.SelecionarRegistroPorId(int.Parse(inputAmigo));
 
                 if (amigo == null)
@@ -75,19 +75,19 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     Console.WriteLine("Este amigo já possui um empréstimo ativo!");
                     Console.ResetColor();
                     DigitarEnterEContinuar.Executar();
-                    return null;
+                    return null!;
                 }
 
                 bool haRevistas = telaRevista.Visualizar(true, false, false, r => r.Status == StatusRevista.Disponivel);
                 if (!haRevistas)
                 {
                     direcionar.DirecionarParaMenu(false, true, "Revista");
-                    return null;
+                    return null!;
                 }
 
                 Console.WriteLine();
                 Console.Write("ID da revista: ");
-                string inputRevista = Console.ReadLine();
+                string inputRevista = Console.ReadLine()!;
                 Revista revista = repositorioRevista.SelecionarRegistroPorId(int.Parse(inputRevista));
 
                 if (revista == null)
@@ -103,7 +103,7 @@ namespace ClubedaLeitura.ModuloEmprestimo
                     Console.WriteLine("Existe um empréstimo em andamento para essa revista!");
                     Console.ResetColor();
                     DigitarEnterEContinuar.Executar();
-                    return null;
+                    return null!;
                 }
 
                 DateTime dataEmprestimo = DateTime.Today;
