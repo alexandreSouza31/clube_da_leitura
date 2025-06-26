@@ -23,7 +23,7 @@ Este é um sistema de gerenciamento de empréstimos de revistas e caixas, desenv
 ##### Módulo de Multas e Reservas
 ![image](https://i.imgur.com/GhV6fjR.gif)
 
-###     ✅ 
+### Funcionalidades principais ✅ 
 - Cadastro de Amigos
 
    - Nome
