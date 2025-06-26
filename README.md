@@ -77,14 +77,6 @@ Este é um sistema de gerenciamento de empréstimos de revistas e caixas, desenv
 
 - **Recursos adicionais**
    - Edição de cadastros com possibilidade de manter valores
-   - Visualização em formato de tabela
-   - Exclusão de registros por ID
-   - Mensagens interativas no terminal
-   - Paleta de cores amigável para caixas
-
-- Recursos adicionais
-
-   - Edição de cadastros com possibilidade de manter valores
 
    - Visualização em formato de tabela
 
